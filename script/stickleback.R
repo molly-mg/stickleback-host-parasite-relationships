@@ -8,7 +8,7 @@ library(dplyr)
 # LOADING DATA ----
 stickleback <- read_csv("data/parasite_exp.csv") # loading csv formatted data into script
 
-head(stickleback) # checking the data has loaded correctly
+#head(stickleback) # checking the data has loaded correctly
 #_________________----
 
 # CLEANING DATA ----
@@ -19,7 +19,7 @@ stickleback <- rename(stickleback,
                       "sex" = "fish_sex",
                       "length_mm" = "initial_total_length_mm") # concise column names
 
-stickleback %>%
+#stickleback %>%
   duplicated() # checking each observation for duplication
 sum() # summing these duplications, there was 0
     
@@ -27,16 +27,31 @@ stickleback %>%
   summarise(min=min(length_mm, na.rm=TRUE), # checking for implausibly small length
             max=max(length_mm, na.rm=TRUE)) # checking for implausibly large length
     
-stickleback %>%
+#stickleback %>%
   distinct(sex) # distinct values in a variable - should only be M or F
 
-stickleback %>%
-  is.na() %>%
-  sum()
+#stickleback %>%
+  distinct(treatment)
 
-summary(stickleback)
+#stickleback %>%
+  is.na() %>% # checking each observation for an NA
+  sum() # summing all of the NA values
 
-    
+#summary(stickleback)
+
+#stickleback %>%
+  summarise(
+    mean_length_mm = mean(length_mm, na.rm=TRUE),
+    mean_diplo_intensity_log = mean(diplo_intensity_log)) # mean length = 41.6 and mean intensity log = 1.91
+
+#_______________----
+  
+# DATA VISUALISATION ----
+  
+diplo_stickleback <- select(.data = stickleback,
+                            treatment, sex, length_mm, diplo_intensity_log)
+  
+  
 #_________________----
 
 
