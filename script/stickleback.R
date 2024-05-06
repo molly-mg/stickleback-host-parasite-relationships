@@ -51,7 +51,17 @@ stickleback %>%
 diplo_stickleback <- select(.data = stickleback,
                             treatment, sex, length_mm, diplo_intensity_log)
   
-  
+ggplot(data = diplo_stickleback, aes(x = treatment, y = length_mm))+
+  geom_jitter(aes(colour = treatment),
+             width = 0.1,
+              alpha = 0.7,
+             show.legend = FALSE) # visualising the effect of treatment on length
+
+ggplot(data = diplo_stickleback, aes(x = treatment, y = diplo_intensity_log))+
+  geom_jitter(aes(colour = treatment),
+              width = 0.1,
+              alpha = 0.7,
+              show.legend = FALSE)
 #_________________----
 
 
