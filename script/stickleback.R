@@ -55,13 +55,37 @@ ggplot(data = diplo_stickleback, aes(x = treatment, y = length_mm))+
   geom_jitter(aes(colour = treatment),
              width = 0.1,
               alpha = 0.7,
-             show.legend = FALSE) # visualising the effect of treatment on length
+             show.legend = FALSE) # visualising the effect of treatment on length - doesnt really show anything but no significant outliers
+
+ggplot(data = diplo_stickleback, aes(x = treatment, y = length_mm))+
+  geom_jitter(aes(colour = sex),
+              width = 0.1,
+              alpha = 0.7,
+              show.legend = FALSE) # effect of sex on length
 
 ggplot(data = diplo_stickleback, aes(x = treatment, y = diplo_intensity_log))+
   geom_jitter(aes(colour = treatment),
               width = 0.1,
               alpha = 0.7,
-              show.legend = FALSE)
+              show.legend = FALSE) # effect of treatment on diplo intensity log
+
+ggplot(data = diplo_stickleback, aes(x = treatment, y = diplo_intensity_log))+
+  geom_jitter(aes(colour = sex),
+              width = 0.1,
+              alpha = 0.7,
+              show.legend = FALSE) # effect of sex of treatment specific diplo intensity
+
+
+filter(.data = diplo_stickleback, treatment == "control") %>%
+  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  geom_boxplot(aes(fill = sex),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)
+  geom_jitter(aes(colour = sex),
+              width=0.2)+
+  theme(legend.position = "none")
+
 #_________________----
 
 
