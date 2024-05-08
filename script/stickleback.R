@@ -76,16 +76,67 @@ ggplot(data = diplo_stickleback, aes(x = treatment, y = diplo_intensity_log))+
               show.legend = FALSE) # effect of sex of treatment specific diplo intensity
 
 
-filter(.data = diplo_stickleback, treatment == "control") %>%
+diplo_stickleback %>%
+  filter(treatment=='Infected LG') %>%
   ggplot(aes(x = sex, y = diplo_intensity_log))+
   geom_boxplot(aes(fill = sex),
                alpha = 0.2,
                width = 0.5,
-               outlier.shape=NA)
+               outlier.shape=NA)+
   geom_jitter(aes(colour = sex),
               width=0.2)+
   theme(legend.position = "none")
 
+
+  
+  
+stickleback %>%
+  group_by(treatment, sex) %>%
+  summarise(n_distinct(id))
+
+summarise(diplo_stickleback)  
+
+
+stickleback %>%
+  #filter(treatment=='Infected LG') %>%
+  ggplot(aes(x = sex, y = diplo_right_eye))+
+  geom_boxplot(aes(fill = sex),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = sex),
+              width=0.2)+
+  theme(legend.position = "none")
+
+stickleback %>%
+  ggplot(aes(x=age_at_dissection,
+             y = length_mm))+
+  geom_jitter(aes(colour = age_at_dissection),
+              width = 0.1,
+              alpha = 0.7,
+              show.legend = FALSE)
+
 #_________________----
+
+# DATA INSIGHTS ----
+diplo_stickleback %>%
+  group_by(treatment, sex) %>%
+  summarise(n = n())
+              
+diplo_stickleback %>%
+  filter(treatment == 'Infected LG') %>%
+  ggplot()+
+  geom_histogram(aes(x=length_mm),
+                 bins=15)
+
+
+diplo_stickleback %>%
+  filter(treatment == 'Infected LG') %>%
+  qqplot(diplo_stickleback, aes(sample = treatment))+
+  stat_qq() +
+  stat_qq_line()
+
+
+
 
 
