@@ -3,6 +3,8 @@ library(usethis)
 library(tidyverse)
 library(janitor)
 library(dplyr)
+library(ggridges)
+library(lubridate)
 #_________________----
 
 # LOADING DATA ----
@@ -137,6 +139,24 @@ diplo_stickleback %>%
   stat_qq_line()
 
 
+diplo_stickleback %>% drop_na %>% ggplot(aes(x = diplo_intensity_log, y = treatment)) +
+  geom_density_ridges(aes(fill = treatment),
+                      alpha = 0.8,
+                      bandwidth = 0.2)
 
 
 
+diplo_stickleback %>%
+  #filter(treatment=='Infected LG') %>%
+  ggplot(aes(x = treatment, y = diplo_intensity_log))+
+  geom_boxplot(aes(fill = treatment),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = treatment),
+              width=0.2)+
+  geom_violin(aes(colour=treatment, fill=treatment),
+              alpha = 0.2,
+              width = 1,
+              show.legend = FALSE)
+  theme(legend.position = "none")
