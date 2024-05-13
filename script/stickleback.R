@@ -5,6 +5,8 @@ library(janitor)
 library(dplyr)
 library(ggridges)
 library(lubridate)
+library(car)
+library(patchwork)
 #_________________----
 
 # LOADING DATA ----
@@ -197,6 +199,125 @@ stickleback %>% ggplot(aes(x = diplo_right_eye, y = sex)) +
   geom_density_ridges(aes(fill = sex),
                       alpha = 0.8,
                       bandwidth = 0.8)
+
+
+
+diplo_stickleback_summary <- stickleback %>%
+  summarise(mean_diplo_intensity=mean(diplo_intensity_log, na.rm = T),
+            sd = sd(diplo_intensity_log, na.rm = T),
+            median_diplo_intensity=median(diplo_intensity_log, na.rm = T),
+            iqr = IQR(diplo_intensity_log, na.rm = T))
+
+diplo_stickleback_summary
+
+
+stickleback %>% 
+  ggplot()+
+  geom_histogram(aes(x=diplo_intensity_log),
+                 alpha=0.8,
+                 bins = 10,
+                 fill="steelblue",
+                 colour="darkgrey")+
+  geom_vline(data=diplo_stickleback_summary,
+             aes(xintercept=mean_diplo_intensity),
+             colour="red",
+             linetype="dashed")+
+  geom_vline(data=diplo_stickleback_summary,
+             aes(xintercept=median_diplo_intensity),
+             colour="black",
+             linetype="dashed")+
+  labs(x = "Diplo Intensity",
+       y = "Frequency")+
+  theme_classic()
+
+ggplot(stickleback, aes(sample = diplo_intensity_log))+
+  stat_qq()+
+  stat_qq_line()
+
+
+stickleback %>%
+  pull(diplo_intensity_log) %>%
+  car::qqPlot()
+
+
+
+
+colour_fill <- "darkorange"
+colour_line <- "steelblue"
+lims <- c(0,5)
+
+diplo_intensity_plot <- function(){
+  
+  stickleback %>% 
+    ggplot(aes(x="",
+               y= diplo_intensity_log))+
+    labs(x= " ",
+         y = "Diplo Intensity")+
+    scale_y_continuous(limits = lims)+
+    theme_minimal()
+}
+
+plot_1 <- diplo_intensity_plot()+
+  geom_jitter(fill = colour_fill,
+              colour = colour_line,
+              width = 0.2,
+              shape = 21)
+
+plot_2 <- diplo_intensity_plot()+
+  geom_boxplot(fill = colour_fill,
+               colour = colour_line,
+               width = 0.4)
+
+plot_3 <- diplo_stickleback_summary %>% 
+  ggplot(aes(x = " ",
+             y = mean_diplo_intensity))+
+  geom_bar(stat = "identity",
+           fill = colour_fill,
+           colour = colour_line,
+           width = 0.2)+
+  geom_errorbar(data = diplo_stickleback_summary,
+                aes(ymin = mean_diplo_intensity - sd,
+                    ymax = mean_diplo_intensity + sd),
+                colour = colour_line,
+                width = 0.1)+
+  labs(x = " ",
+       y = "Diplo Intensity")+
+  scale_y_continuous(limits = lims)+
+  theme_minimal()
+
+
+plot_1 + plot_2 + plot_3 # NOT working
+
+
+stickleback %>% 
+  ggplot(aes(x=diplo_intensity_log,
+             fill=treatment))+
+  geom_histogram(alpha=0.6,
+                 bins=30,
+                 position="identity")+
+  facet_wrap(~treatment,
+             ncol=1)
+
+stickleback_summary <- stickleback %>% 
+  group_by(treatment) %>% 
+  summarise(mean=mean(diplo_intensity_log),
+            sd=sd(diplo_intensity_log))
+
+stickleback_summary %>%
+  ggplot(aes(x=treatment,
+             y=mean))+
+  geom_pointrange(aes(ymin=mean-sd, ymax=mean+sd))+
+  theme_bw()
+
+
+
+# chapter 14
+
+
+
+
+
+
 
 
 
