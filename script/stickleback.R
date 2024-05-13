@@ -160,3 +160,51 @@ diplo_stickleback %>%
               width = 1,
               show.legend = FALSE)
   theme(legend.position = "none")
+  
+
+  stickleback %>% drop_na %>% ggplot(aes(x = diplo_intensity_log, y = treatment)) +
+    geom_density_ridges(aes(fill = treatment),
+                        alpha = 0.8,
+                        bandwidth = 0.2)  
+  
+  
+  
+eye_stickleback <- select(.data = stickleback,
+                          treatment, diplo_right_eye, diplo_left_eye, sex, length_mm, diplo_intensity_log)
+  
+#eye_stickleback <- mutate(.data = eye_stickleback,
+                          #compare_eye = paste(
+                            #as.character(diplo_left_eye),
+                            #as.character(diplo_right_eye),
+                            #sep=","))
+
+
+
+stickleback %>% drop_na %>% ggplot(aes(x = diplo_right_eye, y = treatment)) +
+  geom_density_ridges(aes(fill = treatment),
+                      alpha = 0.8,
+                      bandwidth = 0.6)  
+
+
+
+diplo_stickleback  %>% ggplot(aes(x = diplo_intensity_log, y = treatment)) +
+  geom_density_ridges(aes(fill = treatment),
+                      alpha = 0.8,
+                      bandwidth = 0.2)
+
+
+stickleback %>% ggplot(aes(x = diplo_right_eye, y = sex)) +
+  geom_density_ridges(aes(fill = sex),
+                      alpha = 0.8,
+                      bandwidth = 0.8)
+
+
+
+
+
+
+
+
+
+
+
