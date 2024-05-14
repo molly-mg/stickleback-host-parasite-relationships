@@ -190,7 +190,7 @@ diplo_stickleback %>%
                "orange",
                "red"))+
   theme_classic()+
-  theme(legend.position = "none")
+  theme(legend.position = "none") # plot 2?
 
 
 
