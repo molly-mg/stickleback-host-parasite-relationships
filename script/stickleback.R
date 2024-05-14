@@ -1,62 +1,204 @@
 # PACKAGES ----
+
 library(usethis)
 library(tidyverse)
 library(janitor)
 library(dplyr)
 library(ggridges)
 library(lubridate)
-library(car)
+#library(car)
 library(patchwork)
-library(ggally)
-library(performance)
+#library(ggally)
+#library(performance)
+library(gghighlight)
+
 #_________________----
 
 # LOADING DATA ----
-stickleback <- read_csv("data/parasite_exp.csv") # loading csv formatted data into script
 
-#head(stickleback) # checking the data has loaded correctly
+stickleback <- read_csv("data/parasite_exp.csv") # loading csv format data into script
+
 #_________________----
 
 # CLEANING DATA ----
+
 stickleback <- janitor::clean_names(stickleback) # converting all column names to snake case
 
 stickleback <- rename(stickleback,
-                      "id"="fish_id",
                       "sex" = "fish_sex",
-                      "length_mm" = "initial_total_length_mm") # concise column names
-
-#stickleback %>%
-  duplicated() # checking each observation for duplication
-sum() # summing these duplications, there was 0
-    
-stickleback %>% 
-  summarise(min=min(length_mm, na.rm=TRUE), # checking for implausibly small length
-            max=max(length_mm, na.rm=TRUE)) # checking for implausibly large length
-    
-#stickleback %>%
-  distinct(sex) # distinct values in a variable - should only be M or F
-
-#stickleback %>%
-  distinct(treatment)
-
-#stickleback %>%
-  is.na() %>% # checking each observation for an NA
-  sum() # summing all of the NA values
-
-#summary(stickleback)
-
-#stickleback %>%
-  summarise(
-    mean_length_mm = mean(length_mm, na.rm=TRUE),
-    mean_diplo_intensity_log = mean(diplo_intensity_log)) # mean length = 41.6 and mean intensity log = 1.91
+                      "length_mm" = "initial_total_length_mm") # concise column names for id, sex and length
 
 #_______________----
   
 # DATA VISUALISATION ----
-  
+
 diplo_stickleback <- select(.data = stickleback,
-                            treatment, sex, length_mm, diplo_intensity_log)
+                            treatment, sex, length_mm, diplo_intensity_log) # tibble of columns of interest
   
+
+diplo_stickleback %>%
+  
+  ggplot(aes(x = treatment, y = diplo_intensity_log))+
+  geom_boxplot(aes(colour = treatment),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  #geom_jitter(aes(colour = treatment),
+              #width=0.2)+
+  geom_violin(aes(colour=treatment, fill=treatment),
+              alpha = 0.2,
+              width = 1,
+              show.legend = FALSE)
+theme(legend.position = "none")
+
+diplo_intensity_mean <- diplo_stickleback %>%
+  summarise(mean_diplo_intensity=mean(diplo_intensity_log, na.rm=T))
+
+
+ggplot(diplo_stickleback,
+                 aes(x = diplo_intensity_log,
+                     fill = treatment))+
+            geom_density(
+              alpha = 0.6,
+              weight = 0.5)+
+            gghighlight()+
+            labs(y = "Density")+
+            scale_fill_manual(
+              values = c("white", 
+                         "red", 
+                         "goldenrod1",
+                         "green"))+
+            theme_classic()+
+            theme(legend.position = "none")+
+            facet_wrap(~treatment)+
+  geom_vline(data=diplo_intensity_mean,
+             aes(xintercept=mean_diplo_intensity),
+             colour="black",
+             linetype="solid")
+
+
+
+
+
+#v <- mean(filter(diplo_stickleback, treatment == "Infected HG")$diplo_intensity_log, na.rm=T)
+
+control_mean <- diplo_stickleback %>%
+    filter(treatment == "Control") %>%
+    pull(diplo_intensity_log) %>%
+    mean(na.rm=T)
+
+uninfected_mean <- diplo_stickleback %>%
+  filter(treatment == "Uninfected") %>%
+  pull(diplo_intensity_log) %>%
+  mean(na.rm=T)
+
+infected_lg_mean <- diplo_stickleback %>%
+  filter(treatment == "Infected LG") %>%
+  pull(diplo_intensity_log) %>%
+  mean(na.rm=T)
+
+infected_hg_mean <- diplo_stickleback %>%
+  filter(treatment == "Infected HG") %>%
+  pull(diplo_intensity_log) %>%
+  mean(na.rm=T)
+
+d1 <- ggplot(
+            filter(.data = diplo_stickleback, treatment %in% c("Control", "Infected HG")),
+              aes(x = diplo_intensity_log,
+                  fill = treatment))+
+              geom_density(
+                alpha = 0.6,
+                weight = 0.5)+
+              gghighlight()+
+              labs(y = "Density")+
+              scale_fill_manual(
+                values = c("white", 
+                           "red"))+
+              theme_classic()+
+              theme(legend.position = "none")+
+              geom_vline(data=NULL,
+                aes(xintercept=infected_hg_mean),
+                         colour="blue",
+                         linetype="dashed")+
+              geom_vline(data=NULL,
+                aes(xintercept=control_mean),
+                colour="black",
+                linetype="dashed")
+
+
+d2 <- ggplot(
+              filter(.data = diplo_stickleback, treatment %in% c("Control", "Infected LG")),
+              aes(x = diplo_intensity_log,
+                  fill = treatment))+
+              geom_density(
+                alpha = 0.6,
+                weight = 0.5)+
+              gghighlight()+
+              labs(y = "Density")+
+              scale_fill_manual(
+                values = c("white", 
+                           "orange"))+
+              theme_classic()+
+              theme(legend.position = "none")+
+  geom_vline(data=NULL,
+             aes(xintercept=infected_lg_mean),
+             colour="blue",
+             linetype="dashed")+
+  geom_vline(data=NULL,
+             aes(xintercept=control_mean),
+             colour="black",
+             linetype="dashed")
+
+d3 <- ggplot(
+              filter(.data = diplo_stickleback, treatment %in% c("Control", "Uninfected")),
+              aes(x = diplo_intensity_log,
+                  fill = treatment))+
+              geom_density(
+                alpha = 0.6,
+                weight = 0.5)+
+              gghighlight()+
+              labs(y = "Density")+
+              scale_fill_manual(
+                values = c("white", 
+                           "green"))+
+              theme_classic()+
+              theme(legend.position = "none")+
+  geom_vline(data=NULL,
+             aes(xintercept=uninfected_mean),
+             colour="blue",
+             linetype="dashed")+
+  geom_vline(data=NULL,
+             aes(xintercept=control_mean),
+             colour="black",
+             linetype="dashed")
+
+
+d1+d2+d3 # chosen plot 1
+
+
+diplo_stickleback %>%
+  ggplot(aes(x = treatment, y = diplo_intensity_log))+
+  geom_boxplot(aes(fill = treatment),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = treatment),
+              width=0.2)+
+  scale_fill_manual(
+    values = c("white", 
+               "green",
+               "orange",
+               "red"))+
+  theme_classic()+
+  theme(legend.position = "none")
+
+
+
+
+
+
+
+
 ggplot(data = diplo_stickleback, aes(x = treatment, y = length_mm))+
   geom_jitter(aes(colour = treatment),
              width = 0.1,
@@ -152,7 +294,7 @@ diplo_stickleback %>% drop_na %>% ggplot(aes(x = diplo_intensity_log, y = treatm
 
 diplo_stickleback %>%
   #filter(treatment=='Infected LG') %>%
-  ggplot(aes(x = treatment, y = diplo_intensity_log))+
+  ggplot(aes(x = treatment, y = length_mm))+
   geom_boxplot(aes(fill = treatment),
                alpha = 0.2,
                width = 0.5,
@@ -166,12 +308,19 @@ diplo_stickleback %>%
   theme(legend.position = "none")
   
 
-  stickleback %>% drop_na %>% ggplot(aes(x = diplo_intensity_log, y = treatment)) +
+  stickleback %>% ggplot(aes(x = length_mm, y = diplo_intensity_log)) +
     geom_density_ridges(aes(fill = treatment),
                         alpha = 0.8,
                         bandwidth = 0.2)  
   
-  
+stickleback %>% 
+  ggplot(aes(x=length_mm,
+             y = diplo_intensity_log,
+             colour=treatment))+
+  geom_point()+
+  geom_smooth(method="lm",
+              se=FALSE)+
+  theme_void()
   
 eye_stickleback <- select(.data = stickleback,
                           treatment, diplo_right_eye, diplo_left_eye, sex, length_mm, diplo_intensity_log)
@@ -327,7 +476,7 @@ stickleback %>%
   theme_bw() # include
 
 
-lsmodel1 <- lm(diplo_intensity_log ~ treatment, data=stickleback)
+lsmodel1 <- lm(sex ~ treatment, data=stickleback)
 
 broom::tidy(lsmodel1)
 
@@ -339,5 +488,10 @@ GGally::ggcoef_model(lsmodel1,
 performance::check_model(lsmodel1)
 
 
+sum(stickleback[["diplo_right_eye"]])
 
 
+stickleback %>% 
+  filter(diplo_left_eye) %>%
+  is.na() %>% 
+  sum()
