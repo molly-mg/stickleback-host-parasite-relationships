@@ -7,6 +7,8 @@ library(ggridges)
 library(lubridate)
 library(car)
 library(patchwork)
+library(ggally)
+library(performance)
 #_________________----
 
 # LOADING DATA ----
@@ -310,21 +312,31 @@ stickleback_summary %>%
   theme_bw()
 
 
+lsmodel0 <- lm(formula = diplo_intensity_log ~ 1, data = stickleback)
 
-# chapter 14
+summary(lsmodel0)
+
+stickleback %>%
+  ggplot(aes(x=treatment,
+             y=diplo_intensity_log,
+             colour=treatment))+
+  geom_jitter(alpha=0.5,
+              width=0.1)+
+  stat_summary(fun=mean,
+               size=1.2)+
+  theme_bw() # include
 
 
+lsmodel1 <- lm(diplo_intensity_log ~ treatment, data=stickleback)
+
+broom::tidy(lsmodel1)
+
+GGally::ggcoef_model(lsmodel1,
+                     show_p_values=FALSE, 
+                     conf.level=0.95) # include?
 
 
-
-
-
-
-
-
-
-
-
+performance::check_model(lsmodel1)
 
 
 
