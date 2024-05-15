@@ -11,7 +11,8 @@ library(patchwork)
 #library(ggally)
 #library(performance)
 library(gghighlight)
-library(ggdist)
+#library(ggdist)
+library(colorBlindness)
 
 #_________________----
 
@@ -101,7 +102,7 @@ diplo_stickleback %>%
 
 p1 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Control") %>%
-  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  ggplot(aes(x = sex, y = length_mm))+
   geom_boxplot(aes(fill = sex),
                alpha = 0.8,
                width = 0.5,
@@ -153,18 +154,36 @@ p4 <- diplo_stickleback %>% drop_na %>%
   theme_classic()+
   theme(legend.position = "none")
 
-p5 <- ggplot(diplo_stickleback,
-             aes(x = length_mm,
-                 fill = treatment))+
-  geom_density(
-    alpha = 0.6,
-    weight = 0.5)
+treatment_colours <- c("white", "#FF0500", "#FFBE00", "#FCFF19")
+
+#p5 <- ggplot(diplo_stickleback, aes(x = length_mm, fill = treatment))+
+  #geom_density_ridges(aes(fill = re(alpha = 0.7)+
+  #scale_fill_manual(values = treatment_colours)
+  
+p5 <- diplo_stickleback %>% drop_na %>%
+ 
+  ggplot(aes(x = treatment, y = diplo_intensity_log))+
+  geom_boxplot(aes(fill = treatment),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = treatment),
+              width=0.2)+
+  
+  theme_classic()+
+  theme(legend.position = "none")+
+  scale_fill_manual(values = treatment_colours)
 
 (p1|p2|p3|p4)/p5
 
 
 
-
+diplo_stickleback %>% drop_na %>% ggplot(aes(x = length_mm, y = treatment)) + 
+  geom_density_ridges(aes(fill = treatment),
+                      #colour = colour_line,
+                      alpha = 0.8,
+                      bandwidth = 10)+
+  scale_fill_manual(values = treatment_colours)
 
 
 
@@ -205,7 +224,7 @@ d1 <- ggplot(
               labs(y = "Density")+
               scale_fill_manual(
                 values = c("white", 
-                           "red"))+
+                           "#FF0500"))+
               theme_classic()+
               theme(legend.position = "none")+
               geom_vline(data=NULL,
@@ -229,7 +248,7 @@ d2 <- ggplot(
               labs(y = "Density")+
               scale_fill_manual(
                 values = c("white", 
-                           "orange"))+
+                           "#FFBE00"))+
               theme_classic()+
               theme(legend.position = "none")+
   geom_vline(data=NULL,
@@ -252,7 +271,7 @@ d3 <- ggplot(
               labs(y = "Density")+
               scale_fill_manual(
                 values = c("white", 
-                           "green"))+
+                           "#FCFF19"))+
               theme_classic()+
               theme(legend.position = "none")+
   geom_vline(data=NULL,
@@ -268,7 +287,7 @@ d3 <- ggplot(
 d1+d2+d3 # chosen plot 1
 
 
-
+colorBlindness::cvdPlot()
 
 
 
