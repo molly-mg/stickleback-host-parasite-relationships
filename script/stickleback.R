@@ -11,6 +11,7 @@ library(patchwork)
 #library(ggally)
 #library(performance)
 library(gghighlight)
+library(ggdist)
 
 #_________________----
 
@@ -77,10 +78,101 @@ ggplot(diplo_stickleback,
              linetype="solid")
 
 
-
+diplo_stickleback %>%
+  drop_na(sex) %>%
+  ggplot(aes( x = treatment,
+              y = length_mm))+
+  ggdist::stat_interval()+
+  ggdist::stat_halfeye(aes(fill = sex),
+                       .width = 0,
+                       shape = 21,
+                       colour = "white",
+                       slab_alpha = .4,
+                       size = .5,
+                       position = position_nudge(x = 0.1))
+  
 
 
 #v <- mean(filter(diplo_stickleback, treatment == "Infected HG")$diplo_intensity_log, na.rm=T)
+
+
+
+# PLOT 2 -----
+
+p1 <- diplo_stickleback %>% drop_na %>%
+  filter(treatment == "Control") %>%
+  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  geom_boxplot(aes(fill = sex),
+               alpha = 0.8,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = sex),
+              width=0.2)+
+
+  theme_minimal()+
+  theme(panel.background = element_rect(fill = 'lightgreen', colour = 'black'))+
+  theme(legend.position = "none")
+
+p2 <- diplo_stickleback %>% drop_na %>%
+  filter(treatment == "Infected HG") %>%
+  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  geom_boxplot(aes(fill = sex),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = sex),
+              width=0.2)+
+  
+  theme_classic()+
+  theme(legend.position = "none")
+
+
+p3 <- diplo_stickleback %>% drop_na %>%
+  filter(treatment == "Infected LG") %>%
+  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  geom_boxplot(aes(fill = sex),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = sex),
+              width=0.2)+
+  
+  theme_classic()+
+  theme(legend.position = "none")
+
+p4 <- diplo_stickleback %>% drop_na %>%
+  filter(treatment == "Uninfected") %>%
+  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  geom_boxplot(aes(fill = sex),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = sex),
+              width=0.2)+
+  
+  theme_classic()+
+  theme(legend.position = "none")
+
+p5 <- ggplot(diplo_stickleback,
+             aes(x = length_mm,
+                 fill = treatment))+
+  geom_density(
+    alpha = 0.6,
+    weight = 0.5)
+
+(p1|p2|p3|p4)/p5
+
+
+
+
+
+
+
+
+
+
+# PLOT 1 ------
+
 
 control_mean <- diplo_stickleback %>%
     filter(treatment == "Control") %>%
@@ -174,6 +266,40 @@ d3 <- ggplot(
 
 
 d1+d2+d3 # chosen plot 1
+
+
+
+
+
+
+
+
+
+
+
+diplo_stickleback %>% drop_na %>%
+  ggplot(aes(x = treatment, y = length_mm))+
+  geom_boxplot(aes(fill = treatment),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape=NA)+
+  geom_jitter(aes(colour = sex),
+              width=0.2)+
+  scale_fill_manual(
+    values = c("white", 
+               "green",
+               "orange",
+               "red"))+
+  theme_classic()+
+  theme(legend.position = "none")
+
+
+
+
+
+
+
+
 
 
 diplo_stickleback %>%
@@ -313,9 +439,10 @@ diplo_stickleback %>%
                         alpha = 0.8,
                         bandwidth = 0.2)  
   
-stickleback %>% 
-  ggplot(aes(x=length_mm,
-             y = diplo_intensity_log,
+diplo_stickleback %>% 
+  filter(treatment == "Control") %>%
+  ggplot(aes(x=diplo_intensity_log,
+             y = length_mm,
              colour=treatment))+
   geom_point()+
   geom_smooth(method="lm",
