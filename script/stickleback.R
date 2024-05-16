@@ -100,107 +100,98 @@ diplo_stickleback %>%
 
 # PLOT 4 -----
 
+axis_limit <- coord_cartesian(xlim=c(40,20))
+
+
 p1 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Control") %>%
   ggplot(aes(x = sex, y = length_mm))+
-  geom_boxplot(aes(fill = sex),
-               alpha = 0.8,
-               width = 0.5,
-               outlier.shape=NA)+
   geom_violin(aes(colour=sex, fill=sex),
-              alpha = 0.2,
+              alpha = 1,
               width = 1,
-              show.legend = FALSE)
-theme(legend.position = "none")+
-  #geom_jitter(aes(colour = sex),
-              #width=0.2)+
+              show.legend = FALSE)+
+  geom_boxplot(colour="black",
+               fill="white",
+               alpha = 1,
+               width = 0.4,
+               outlier.shape=NA,
+               show.legend = FALSE)
 
-  theme_minimal()+
-  theme(panel.background = element_rect(fill = 'lightgreen', colour = 'black'))+
-  theme(legend.position = "none")
 
 p2 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Infected HG") %>%
   ggplot(aes(x = sex, y = length_mm))+
-  geom_boxplot(aes(fill = sex),
-               alpha = 0.2,
-               width = 0.5,
-               outlier.shape=NA)+
   geom_violin(aes(colour=sex, fill=sex),
-              alpha = 0.2,
+              alpha = 1,
               width = 1,
               show.legend = FALSE)+
-  #geom_jitter(aes(colour = sex),
-              #width=0.2)+
-  
-  theme_classic()+
-  theme(legend.position = "none")
+  geom_boxplot(colour="black",
+               fill="white",
+               alpha = 1,
+               width = 0.4,
+               outlier.shape=NA,
+               show.legend = FALSE)
 
 
 p3 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Infected LG") %>%
   ggplot(aes(x = sex, y = length_mm))+
-  geom_boxplot(aes(fill = sex),
-               alpha = 0.2,
-               width = 0.5,
-               outlier.shape=NA)+
   geom_violin(aes(colour=sex, fill=sex),
-              alpha = 0.2,
+              alpha = 1,
               width = 1,
               show.legend = FALSE)+
- # geom_jitter(aes(colour = sex),
-             # width=0.2)+
+  geom_boxplot(colour="black",
+               fill="white",
+               alpha = 1,
+               width = 0.4,
+               outlier.shape=NA,
+               show.legend = FALSE)
   
-  theme_classic()+
-  theme(legend.position = "none")
 
 p4 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Uninfected") %>%
   ggplot(aes(x = sex, y = length_mm))+
-  geom_boxplot(aes(fill = sex),
-               alpha = 0.2,
-               width = 0.5,
-               outlier.shape=NA)+
   geom_violin(aes(colour=sex, fill=sex),
-              alpha = 0.2,
+              alpha = 1,
               width = 1,
               show.legend = FALSE)+
-  #geom_jitter(aes(colour = sex),
-              #width=0.2)+
+  geom_boxplot(colour="black",
+               fill="white",
+               alpha = 1,
+               width = 0.4,
+               outlier.shape=NA,
+               show.legend = FALSE)
   
-  theme_classic()+
-  theme(legend.position = "none")
 
-
-
-
-
-treatment_colours <- c("white", "#FF0500", "#FFBE00", "#FCFF19")
+treatment_colours <- c("white", "white", "#FF0500", "#FFBE00", "#FCFF19")
 
 p5 <- diplo_stickleback %>% drop_na %>%
- 
-  ggplot(aes(x = treatment, y = length_mm))+
-  geom_boxplot(aes(fill = treatment),
-               alpha = 0.2,
-               width = 0.5,
-               outlier.shape=NA)+
-  geom_violin(aes(colour=treatment, fill=treatment),
-              alpha = 0.2,
-              width = 1,
-              show.legend = FALSE)+
-  #geom_jitter(aes(colour = treatment),
-              #width=0.2)+
+  ggplot(aes(x = treatment, y = length_mm, fill=treatment))+
+   geom_violin(
+     alpha = 1,
+     width = 1,
+     show.legend = FALSE,
+          ) +
+  geom_boxplot(
+    aes(fill=""),
+    alpha = 1,
+    width = 0.5,
+    outlier.shape=NA)+
   
-  theme_classic()+
   theme(legend.position = "none")+
   scale_fill_manual(values = treatment_colours)
 
-(p1|p2|p3|p4)/p5
-
-
-
-
-
+((
+  p1 + theme(panel.background = element_rect(fill = 'green', colour = 'red'))
+  |
+    p2 + theme(panel.background = element_rect(fill = 'blue', colour = 'orange'))
+  |
+    p3 + theme(panel.background = element_rect(fill = 'blue', colour = 'orange'))
+  |
+    p4 + theme(panel.background = element_rect(fill = 'blue', colour = 'orange'))
+  )/p5 + theme(panel.background = element_rect(fill = 'blue', colour = 'orange'))
+  ) &
+  ylim(30, 55)
 
 
 

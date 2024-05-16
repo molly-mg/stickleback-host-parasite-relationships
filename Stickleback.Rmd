@@ -4,6 +4,14 @@ output: html_document
 date: "2024-05-16"
 ---
 
+```{r read-data, include=FALSE}
+# READ DATA ----
+
+source("script/stickleback.R")
+
+```
+
+
 ## Introduction
 Parasitism has a number of behavioural, physiological and immunological effects on three-spined Sticklebacks. The aim of this study was to assess the impacts of infection of parasite A () on the likelihood the stickleback would be infected with parasite B (). Three 'treatments' of fish were studied; high-grade parasite A infection, low grade parasite A infection and a group presently uninfected but for which the history is unknown. The control group consisted of fish whomst had never been infected with parasite A. The four groups were exposed to diplo, dissected, and their contents of diplo counted with the aim to discern whether exposure to parasite A had a positive or negative influence on the infection of the host with parasite B. The aims were to identify how current A infection affects B infection and how previous A infection infects B infection. The hypothesis being that the low grade or cleared infection of parasite A would offer some level of protection from parasite B over the control.
 vaccines - immunity effects positive, what are stickleback used for ... could be helpful
