@@ -1,0 +1,52 @@
+---
+title: "The Immune Response of Gasterosteus aculeatus to Schistocephalus solidus and Subsequent Response to Diplostomum pseudospathaceum"
+output: html_document
+date: "2024-05-16"
+---
+
+## Introduction
+Parasitism has a number of behavioural, physiological and immunological effects on three-spined Sticklebacks. The aim of this study was to assess the impacts of infection of parasite A () on the likelihood the stickleback would be infected with parasite B (). Three 'treatments' of fish were studied; high-grade parasite A infection, low grade parasite A infection and a group presently uninfected but for which the history is unknown. The control group consisted of fish whomst had never been infected with parasite A. The four groups were exposed to diplo, dissected, and their contents of diplo counted with the aim to discern whether exposure to parasite A had a positive or negative influence on the infection of the host with parasite B. The aims were to identify how current A infection affects B infection and how previous A infection infects B infection. The hypothesis being that the low grade or cleared infection of parasite A would offer some level of protection from parasite B over the control.
+vaccines - immunity effects positive, what are stickleback used for ... could be helpful
+
+
+## Analysis
+The problem addressed here is whether there is an immune benefit to being infected with a less damaging parasite and what the cost-benefit analysis is to the fish.
+
+The data was collected from ... they measured parasite A infection in grades; high, low and unifected. They also measured length of the fish pre exposure, age, sex, total diplo, diplo log and diplo in each eye. In this analysis we were interested in the overall diplo infection and its potential impacts on immunity. We also considered the disadvatages of parasite A such as energetic effects of parasitism thus studying length and also looked at potential differences between sexes as energetic and immunological differences may affect them differently.
+stats
+Rversion
+Rpackages
+
+## Results and Discussion
+
+### Parasite A Infection Impact on Parasite B
+Hypothesis 1: The impact of a present A infection will have a negative consequence for the immune system therefore infection of parasite B will be higher.
+Hypothesis 2: Previous potential infection of parasite A will have a beneficial consequence for parasite B protection.
+
+1 Plot of LG and HG against control
+
+2 Plot of Uninfected against control - shows is superior to having never been infected
+
+visual model summaries and model tables 
+3 summary figure (red, orange, yellow)
+
+model findings
+
+overall this shows that there is potential benefit to previous infetion. However, the downside of the uninfected data is we do not know how many of them were infected we just see a sample of the poplation however seeing as it is very different from the control we can assume a great proportion had previous contact with parasite A. Other potential considerations are whether there is a disadvantage to having parasite A energetically - which could be measured by size and on sex, are one sex more affected - what are the reproductive impacts of this? 
+
+### biological impact of parasite A on length and sex
+
+4 plot of length per treatment 
+combine
+5 plot of length per treatment broken down into sex
+
+model findings
+
+
+## Conclusion 
+yes there are benefits but at what cost?
+cost more severe to a specific group?
+the next steps
+
+
+

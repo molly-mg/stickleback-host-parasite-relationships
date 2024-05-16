@@ -98,7 +98,7 @@ diplo_stickleback %>%
 
 
 
-# PLOT 2 -----
+# PLOT 4 -----
 
 p1 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Control") %>%
@@ -107,8 +107,13 @@ p1 <- diplo_stickleback %>% drop_na %>%
                alpha = 0.8,
                width = 0.5,
                outlier.shape=NA)+
-  geom_jitter(aes(colour = sex),
-              width=0.2)+
+  geom_violin(aes(colour=sex, fill=sex),
+              alpha = 0.2,
+              width = 1,
+              show.legend = FALSE)
+theme(legend.position = "none")+
+  #geom_jitter(aes(colour = sex),
+              #width=0.2)+
 
   theme_minimal()+
   theme(panel.background = element_rect(fill = 'lightgreen', colour = 'black'))+
@@ -116,13 +121,17 @@ p1 <- diplo_stickleback %>% drop_na %>%
 
 p2 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Infected HG") %>%
-  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  ggplot(aes(x = sex, y = length_mm))+
   geom_boxplot(aes(fill = sex),
                alpha = 0.2,
                width = 0.5,
                outlier.shape=NA)+
-  geom_jitter(aes(colour = sex),
-              width=0.2)+
+  geom_violin(aes(colour=sex, fill=sex),
+              alpha = 0.2,
+              width = 1,
+              show.legend = FALSE)+
+  #geom_jitter(aes(colour = sex),
+              #width=0.2)+
   
   theme_classic()+
   theme(legend.position = "none")
@@ -130,45 +139,57 @@ p2 <- diplo_stickleback %>% drop_na %>%
 
 p3 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Infected LG") %>%
-  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  ggplot(aes(x = sex, y = length_mm))+
   geom_boxplot(aes(fill = sex),
                alpha = 0.2,
                width = 0.5,
                outlier.shape=NA)+
-  geom_jitter(aes(colour = sex),
-              width=0.2)+
+  geom_violin(aes(colour=sex, fill=sex),
+              alpha = 0.2,
+              width = 1,
+              show.legend = FALSE)+
+ # geom_jitter(aes(colour = sex),
+             # width=0.2)+
   
   theme_classic()+
   theme(legend.position = "none")
 
 p4 <- diplo_stickleback %>% drop_na %>%
   filter(treatment == "Uninfected") %>%
-  ggplot(aes(x = sex, y = diplo_intensity_log))+
+  ggplot(aes(x = sex, y = length_mm))+
   geom_boxplot(aes(fill = sex),
                alpha = 0.2,
                width = 0.5,
                outlier.shape=NA)+
-  geom_jitter(aes(colour = sex),
-              width=0.2)+
+  geom_violin(aes(colour=sex, fill=sex),
+              alpha = 0.2,
+              width = 1,
+              show.legend = FALSE)+
+  #geom_jitter(aes(colour = sex),
+              #width=0.2)+
   
   theme_classic()+
   theme(legend.position = "none")
 
+
+
+
+
 treatment_colours <- c("white", "#FF0500", "#FFBE00", "#FCFF19")
 
-#p5 <- ggplot(diplo_stickleback, aes(x = length_mm, fill = treatment))+
-  #geom_density_ridges(aes(fill = re(alpha = 0.7)+
-  #scale_fill_manual(values = treatment_colours)
-  
 p5 <- diplo_stickleback %>% drop_na %>%
  
-  ggplot(aes(x = treatment, y = diplo_intensity_log))+
+  ggplot(aes(x = treatment, y = length_mm))+
   geom_boxplot(aes(fill = treatment),
                alpha = 0.2,
                width = 0.5,
                outlier.shape=NA)+
-  geom_jitter(aes(colour = treatment),
-              width=0.2)+
+  geom_violin(aes(colour=treatment, fill=treatment),
+              alpha = 0.2,
+              width = 1,
+              show.legend = FALSE)+
+  #geom_jitter(aes(colour = treatment),
+              #width=0.2)+
   
   theme_classic()+
   theme(legend.position = "none")+
@@ -178,19 +199,14 @@ p5 <- diplo_stickleback %>% drop_na %>%
 
 
 
-diplo_stickleback %>% drop_na %>% ggplot(aes(x = length_mm, y = treatment)) + 
-  geom_density_ridges(aes(fill = treatment),
-                      #colour = colour_line,
-                      alpha = 0.8,
-                      bandwidth = 10)+
-  scale_fill_manual(values = treatment_colours)
 
 
 
 
 
 
-# PLOT 1 ------
+
+# PLOT 3 ------
 
 
 control_mean <- diplo_stickleback %>%
@@ -287,7 +303,7 @@ d3 <- ggplot(
 d1+d2+d3 # chosen plot 1
 
 
-colorBlindness::cvdPlot()
+
 
 
 
