@@ -23,6 +23,13 @@ Rpackages
 Hypothesis 1: The impact of a present A infection will have a negative consequence for the immune system therefore infection of parasite B will be higher.
 Hypothesis 2: Previous potential infection of parasite A will have a beneficial consequence for parasite B protection.
 
+
+```{r plot-1, eval = TRUE, echo = FALSE}
+
+plot_1
+
+```
+
 1 Plot of LG and HG against control
 
 2 Plot of Uninfected against control - shows is superior to having never been infected

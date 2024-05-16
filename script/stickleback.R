@@ -206,7 +206,7 @@ p5 <- diplo_stickleback %>% drop_na %>%
 
 
 
-# PLOT 3 ------
+# PLOT 1 ------
 
 
 control_mean <- diplo_stickleback %>%
@@ -300,7 +300,10 @@ d3 <- ggplot(
              linetype="dashed")
 
 
-d1+d2+d3 # chosen plot 1
+plot_1 <- d1+d2+d3 # chosen plot 1
+
+plot_1
+# PLOT 1 ----
 
 
 
