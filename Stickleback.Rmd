@@ -24,7 +24,9 @@ The data was collected from ... they measured parasite A infection in grades; hi
 
 Linear model 1:
 A linear model was run to analyse diplo intensity as a function of explanatory variable treatment. Looking at whether the differences between the control and the treatments were significant, Infected LG crossed zero.
+A general linear model was used to compare diplo intensity with the predictor variable of treatment. At 95% confidence intervals infected HG had 0.46 higher diplo intensity (CI 0.26 and 0.65), infected LG have a lower intensity but the CIs cross zero so not significant (CI -0.48 and 0.06), uninfected was -0.34 less intensity on average (CI -0.57 and -0.11). (write up - lecture 3, slide 8)
 
+t-tests must be independent as all observations are independent.
 
 
 Rversion

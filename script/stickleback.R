@@ -302,6 +302,23 @@ plot_1
 
 # LINEAR MODELS ----
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 treatment_model <- lm(diplo_intensity_log ~ treatment, data=diplo_stickleback)
 
 broom::tidy(treatment_model)
@@ -337,6 +354,16 @@ performance::check_model(treatment_model_2, detrend = F)
 plot(treatment_model_2, which = c(4,4))
 
 lmtest::bptest(treatment_model_2)
+
+
+
+
+
+
+
+
+
+
 
 
 
