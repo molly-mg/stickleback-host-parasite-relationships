@@ -21,7 +21,12 @@ vaccines - immunity effects positive, what are stickleback used for ... could be
 The problem addressed here is whether there is an immune benefit to being infected with a less damaging parasite and what the cost-benefit analysis is to the fish.
 
 The data was collected from ... they measured parasite A infection in grades; high, low and unifected. They also measured length of the fish pre exposure, age, sex, total diplo, diplo log and diplo in each eye. In this analysis we were interested in the overall diplo infection and its potential impacts on immunity. We also considered the disadvatages of parasite A such as energetic effects of parasitism thus studying length and also looked at potential differences between sexes as energetic and immunological differences may affect them differently.
-stats
+
+Linear model 1:
+A linear model was run to analyse diplo intensity as a function of explanatory variable treatment. Looking at whether the differences between the control and the treatments were significant, Infected LG crossed zero.
+
+
+
 Rversion
 Rpackages
 

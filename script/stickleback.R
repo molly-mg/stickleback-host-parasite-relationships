@@ -8,11 +8,13 @@ library(ggridges)
 library(lubridate)
 #library(car)
 library(patchwork)
-#library(ggally)
-#library(performance)
+library(GGally)
+library(performance)
 library(gghighlight)
 #library(ggdist)
 library(colorBlindness)
+library(rstatix)
+library(lmtest)
 
 #_________________----
 
@@ -295,6 +297,91 @@ plot_1 <- d1+d2+d3 # chosen plot 1
 
 plot_1
 # PLOT 1 ----
+
+
+
+# LINEAR MODELS ----
+
+treatment_model <- lm(diplo_intensity_log ~ treatment, data=diplo_stickleback)
+
+broom::tidy(treatment_model)
+
+diplo_stickleback %>%
+  group_by(treatment) %>%
+  summarise(mean=mean(diplo_intensity_log))
+
+summary(treatment_model)
+
+confint(treatment_model)
+
+GGally::ggcoef_model(treatment_model,
+                     show_p_values=FALSE,
+                     conf.level=0.95)
+
+broom::tidy(treatment_model, conf.int=T, conf.level=0.99)
+
+vif(treatment_model)
+
+
+# multiple variable model
+
+treatment_model_2 <-lm(diplo_intensity_log ~ treatment + sex + length_mm + length_mm:sex,
+                       data = diplo_stickleback)
+
+summary(treatment_model_2)
+
+vif(treatment_model_2)
+
+performance::check_model(treatment_model_2, detrend = F)
+
+plot(treatment_model_2, which = c(4,4))
+
+lmtest::bptest(treatment_model_2)
+
+
+
+
+# 14.4.1 to get the other mean/standard error/CIs
+
+# standard error (and therefore CIs) are the same for all at the variance is pooled, they vary numerically thanks to the sample sizes
+
+performance::check_model(treatment_model)
+# slightly violates normality of reisdues
+
+performance::check_model(treatment_model, check=c("normality","qq"))
+
+plot(treatment_model, which=c(2,2))
+
+performance::check_model(treatment_model, check="homogeneity")
+
+plot(treatment_model, which=c(1,3))
+
+performance::check_model(treatment_model, check="outliers")
+
+plot(treatment_model, which=c(4,4))
+
+# reasonably good model on the whole (normality of residues is iffy)
+# a model which violates assumptions may be difficult to apply to irl situations
+
+#t-test (paired)
+ 
+diplo_stickleback %>%
+  mutate(pair = as_factor(pair)) %>%
+  lm(diplo_intensity_log ~ treatment + pair, data = .) %>%
+  broom::tidy()
+
+
+# Pearson's R
+diplo_stickleback %>%
+  cor_test(diplo_intensity_log, length_mm)
+
+
+
+# ANOVA
+
+anova(treatment_model)
+
+
 
 
 
