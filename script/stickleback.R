@@ -296,7 +296,7 @@ d3 <- ggplot(
 plot_1 <- d1+d2+d3 # chosen plot 1
 
 plot_1
-# PLOT 1 ----
+
 
 
 
@@ -336,15 +336,10 @@ summary(sqrt_length_treatment_lmodel)
 check_model(log_length_treatment_lmodel)
 
 # slightly violates normality of residues and posterior positive check
-# neither data transformation inmproved the assumptions
+# neither data transformation improved the assumptions
 
 sex_lmodel <- lm(length_mm ~ sex, data = diplo_stickleback)
-summary(sex_lmodel) # basic linear model
-
-performance::check_model(sex_lmodel, check = "normality")
-# slightly violates normality
-
-performance::check_model(sex_lmodel, check = "homogeneity")
+summary(sex_lmodel) # linear model
 
 
 
@@ -354,41 +349,8 @@ performance::check_model(sex_lmodel, check = "homogeneity")
 
 
 
-treatment_model <- lm(diplo_intensity_log ~ treatment, data=diplo_stickleback)
-
-broom::tidy(treatment_model)
-
-diplo_stickleback %>%
-  group_by(treatment) %>%
-  summarise(mean=mean(diplo_intensity_log))
-
-summary(treatment_model)
-
-confint(treatment_model)
-
-GGally::ggcoef_model(treatment_model,
-                     show_p_values=FALSE,
-                     conf.level=0.95)
-
-broom::tidy(treatment_model, conf.int=T, conf.level=0.99)
-
-vif(treatment_model)
 
 
-# multiple variable model
-
-treatment_model_2 <-lm(diplo_intensity_log ~ treatment + sex + length_mm + length_mm:sex,
-                       data = diplo_stickleback)
-
-summary(treatment_model_2)
-
-vif(treatment_model_2)
-
-performance::check_model(treatment_model_2, detrend = F)
-
-plot(treatment_model_2, which = c(4,4))
-
-lmtest::bptest(treatment_model_2)
 
 
 
