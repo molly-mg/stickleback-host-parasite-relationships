@@ -302,14 +302,49 @@ plot_1
 
 # LINEAR MODELS ----
 
+treatment_lmodel <- lm(diplo_intensity_log ~ treatment, data = diplo_stickleback)
+summary(treatment_lmodel) # ANOVA
+
+check_model(treatment_lmodel)
+#violates normality of residues
+
+#square root transformation
+
+sqrt_treatment_lmodel <- lm(sqrt(diplo_intensity_log) ~ treatment, data = diplo_stickleback)
+summary(sqrt_treatment_lmodel)
+check_model(sqrt_treatment_lmodel)
+# improved normality of residues
 
 
 
 
+length_treatment_lmodel <- lm(length_mm ~ treatment, data = diplo_stickleback)
+summary(length_treatment_lmodel) #ANOVA
 
+check_model(length_treatment_lmodel)
 
+#square root transformation
 
+sqrt_length_treatment_lmodel <- lm(sqrt(length_mm) ~ treatment, data = diplo_stickleback)
+summary(sqrt_length_treatment_lmodel)
+check_model(sqrt_length_treatment_lmodel)
 
+#log transformation
+
+log_length_treatment_lmodel <- lm(log(length_mm) ~ treatment, data = diplo_stickleback)
+summary(sqrt_length_treatment_lmodel)
+check_model(log_length_treatment_lmodel)
+
+# slightly violates normality of residues and posterior positive check
+# neither data transformation inmproved the assumptions
+
+sex_lmodel <- lm(length_mm ~ sex, data = diplo_stickleback)
+summary(sex_lmodel) # basic linear model
+
+performance::check_model(sex_lmodel, check = "normality")
+# slightly violates normality
+
+performance::check_model(sex_lmodel, check = "homogeneity")
 
 
 
