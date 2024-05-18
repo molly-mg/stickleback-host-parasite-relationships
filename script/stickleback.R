@@ -15,6 +15,8 @@ library(gghighlight)
 library(colorBlindness)
 library(rstatix)
 library(lmtest)
+library(gt)
+library(gtExtras)
 
 #_________________----
 
@@ -40,237 +42,151 @@ diplo_stickleback <- select(.data = stickleback,
                             treatment, sex, length_mm, diplo_intensity_log) # tibble of columns of interest
   
 
+# Define Colours
 
-
-
-
-
-
-
-
-
-
-
-
+col_control <- 'white'
+col_infected_hg <- "#FF0500"
+col_infected_lg <- "#FFBE00"
+col_uninfected <- "#FCFF19"
 
 
 # PLOT 1 ------
 
-ggplot(diplo_stickleback,
-       aes(x = diplo_intensity_log,
-           fill = treatment))+
-  geom_density(
-    alpha = 0.6,
-    weight = 0.5)+
-  gghighlight()+
-  labs(y = "Density")+
-  scale_fill_manual(
-    values = c("white", 
-               "red", 
-               "goldenrod1",
-               "green"))+
-  theme_classic()+
-  theme(legend.position = "none")+
-  facet_wrap(~treatment)+
-  geom_vline(data=diplo_intensity_mean,
-             aes(xintercept=mean_diplo_intensity),
-             colour="black",
-             linetype="solid")
 
+treatment_vs_intensity <- function(field, colour) {
+  fields <- c(field)
+  if (field != "Control"){
+    fields <- append(fields, "Control")
+  }
 
-control_mean <- diplo_stickleback %>%
-    filter(treatment == "Control") %>%
-    pull(diplo_intensity_log) %>%
-    mean(na.rm=T)
+  p <-ggplot(
+    filter(.data = diplo_stickleback, treatment %in% fields),
+    aes(x = diplo_intensity_log,
+        fill = treatment))+
+    geom_density(
+      alpha = 0.6,
+      weight = 0.5)+
+    gghighlight()+
+    labs(y = "Density", x= "Diplo Intensity")+
+    scale_fill_manual(
+      values = c("white",colour))+
+    theme_classic()+
+    theme(legend.position = "none")+
+    geom_vline(data=NULL,
+               aes(xintercept=
+                     diplo_stickleback %>%
+                     filter(treatment == "Control") %>%
+                     pull(diplo_intensity_log) %>%
+                     mean(na.rm=T)),
+               colour="black",
+               linetype="dashed") &
+    xlim(0,4)
+  
+  if (field != "Control") {
+    p <- p +  geom_vline(data=NULL,
+                        aes(xintercept=
+                              diplo_stickleback %>%
+                              filter(treatment == field) %>%
+                              pull(diplo_intensity_log) %>%
+                              mean(na.rm=T)
+                            ),
+                        colour="blue",
+                        linetype="dashed")
+  }
+  return (p)
+}
 
-uninfected_mean <- diplo_stickleback %>%
-  filter(treatment == "Uninfected") %>%
-  pull(diplo_intensity_log) %>%
-  mean(na.rm=T)
-
-infected_lg_mean <- diplo_stickleback %>%
-  filter(treatment == "Infected LG") %>%
-  pull(diplo_intensity_log) %>%
-  mean(na.rm=T)
-
-infected_hg_mean <- diplo_stickleback %>%
-  filter(treatment == "Infected HG") %>%
-  pull(diplo_intensity_log) %>%
-  mean(na.rm=T)
-
-
-
-d0 <- ggplot(
-  filter(.data = diplo_stickleback, treatment %in% c("Control")),
-  aes(x = diplo_intensity_log,
-      fill = treatment))+
-  geom_density(
-    alpha = 0.6,
-    weight = 0.5)+
-  gghighlight()+
-  labs(y = "Density")+
-  scale_fill_manual(
-    values = c("white"))+
-  theme_classic()+
-  theme(legend.position = "none")+
-  geom_vline(data=NULL,
-             aes(xintercept=control_mean),
-             colour="black",
-             linetype="dashed")
-
-
-
-
-d1 <- ggplot(
-            filter(.data = diplo_stickleback, treatment %in% c("Control", "Infected HG")),
-              aes(x = diplo_intensity_log,
-                  fill = treatment))+
-              geom_density(
-                alpha = 0.6,
-                weight = 0.5)+
-              gghighlight()+
-              labs(y = "Density")+
-              scale_fill_manual(
-                values = c("white", 
-                           "#FF0500"))+
-              theme_classic()+
-              theme(legend.position = "none")+
-              geom_vline(data=NULL,
-                aes(xintercept=infected_hg_mean),
-                         colour="blue",
-                         linetype="dashed")+
-              geom_vline(data=NULL,
-                aes(xintercept=control_mean),
-                colour="black",
-                linetype="dashed")
-
-
-d2 <- ggplot(
-              filter(.data = diplo_stickleback, treatment %in% c("Control", "Infected LG")),
-              aes(x = diplo_intensity_log,
-                  fill = treatment))+
-              geom_density(
-                alpha = 0.6,
-                weight = 0.5)+
-              gghighlight()+
-              labs(y = "Density")+
-              scale_fill_manual(
-                values = c("white", 
-                           "#FFBE00"))+
-              theme_classic()+
-              theme(legend.position = "none")+
-  geom_vline(data=NULL,
-             aes(xintercept=infected_lg_mean),
-             colour="blue",
-             linetype="dashed")+
-  geom_vline(data=NULL,
-             aes(xintercept=control_mean),
-             colour="black",
-             linetype="dashed")
-
-d3 <- ggplot(
-              filter(.data = diplo_stickleback, treatment %in% c("Control", "Uninfected")),
-              aes(x = diplo_intensity_log,
-                  fill = treatment))+
-              geom_density(
-                alpha = 0.6,
-                weight = 0.5)+
-              gghighlight()+
-              labs(y = "Density")+
-              scale_fill_manual(
-                values = c("white", 
-                           "#FCFF19"))+
-              theme_classic()+
-              theme(legend.position = "none")+
-  geom_vline(data=NULL,
-             aes(xintercept=uninfected_mean),
-             colour="blue",
-             linetype="dashed")+
-  geom_vline(data=NULL,
-             aes(xintercept=control_mean),
-             colour="black",
-             linetype="dashed")
-
-
-plot_1 <- d0+d1+d2+d3 # chosen plot 1
-
-plot_1
-
+plot_1 <- treatment_vs_intensity("Control", col_control) +
+  treatment_vs_intensity("Infected LG", col_infected_lg) +
+  treatment_vs_intensity("Uninfected", col_uninfected) +
+  treatment_vs_intensity("Infected HG", col_infected_hg)
 
 #PLOT 2 ----
+
+
+plot_density_treatment <- function(treatment_arg) {
+  
+  cols <- list()
+  cols['Control'] <- 'grey'
+  cols['Infected HG'] <- col_infected_hg
+  cols['Infected LG'] <- col_infected_lg
+  cols['Uninfected'] <- col_uninfected
+  
+  full_range <- diplo_stickleback |>
+    pull(diplo_intensity_log) |>
+    range()
+  
+  diplo_stickleback |>
+    filter(treatment == treatment_arg) |>
+    ggplot(aes(x = diplo_intensity_log, y = treatment)) +
+    geom_violin(fill = cols[treatment_arg]) +
+    theme_minimal() +
+    scale_y_discrete(breaks = NULL) +
+    scale_x_continuous(breaks = NULL) +
+    labs(x = element_blank(), y = element_blank()) +
+    coord_cartesian(xlim = full_range)
+}
+
+
+
+diplo_stickleback |>
+  group_by(treatment) |>
+  summarise(
+    Min = min(diplo_intensity_log) |> round(digits = 2),
+    Mean = mean(diplo_intensity_log) |> round(digits = 2),
+    Max = max(diplo_intensity_log) |> round(digits = 2)
+  ) |>
+  mutate(treatment = as.character(treatment)) |>
+  rename(Treatment = treatment) |>
+  mutate(Distribution = Treatment) |> 
+  gt() |>
+  tab_spanner(
+    label = 'Diplo Intensity',
+    columns = -Treatment
+  ) |>
+  text_transform(
+    locations = cells_body(columns = 'Distribution'),
+    fn = function(column) {
+      map(column, plot_density_treatment) |>
+        ggplot_image(height = px(50), aspect_ratio = 3)
+    }
+  ) 
 
 
 
 
 # PLOT 3 -----
 
-axis_limit <- coord_cartesian(xlim=c(40,20))
 
+sex_graph <- function(treat, fill_col){diplo_stickleback %>% drop_na %>%
+    filter(treatment == treat) %>%
+    ggplot(aes(x = sex, y = length_mm))+
+    labs(x='Sex', y='Length (mm)')+
+    geom_violin(aes(colour=sex, fill=sex),
+                alpha = 1,
+                width = 1,
+                show.legend = FALSE)+
+    geom_boxplot(colour="black",
+                 fill="white",
+                 alpha = 1,
+                 width = 0.4,
+                 outlier.shape=NA,
+                 )+
+    theme(
+      panel.background = element_rect(fill = fill_col, colour = 'black'),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank()
+      )
+  
+}
 
-p1 <- diplo_stickleback %>% drop_na %>%
-  filter(treatment == "Control") %>%
-  ggplot(aes(x = sex, y = length_mm))+
-  geom_violin(aes(colour=sex, fill=sex),
-              alpha = 1,
-              width = 1,
-              show.legend = FALSE)+
-  geom_boxplot(colour="black",
-               fill="white",
-               alpha = 1,
-               width = 0.4,
-               outlier.shape=NA,
-               show.legend = FALSE)
-
-
-p2 <- diplo_stickleback %>% drop_na %>%
-  filter(treatment == "Infected HG") %>%
-  ggplot(aes(x = sex, y = length_mm))+
-  geom_violin(aes(colour=sex, fill=sex),
-              alpha = 1,
-              width = 1,
-              show.legend = FALSE)+
-  geom_boxplot(colour="black",
-               fill="white",
-               alpha = 1,
-               width = 0.4,
-               outlier.shape=NA,
-               show.legend = FALSE)
-
-
-p3 <- diplo_stickleback %>% drop_na %>%
-  filter(treatment == "Infected LG") %>%
-  ggplot(aes(x = sex, y = length_mm))+
-  geom_violin(aes(colour=sex, fill=sex),
-              alpha = 1,
-              width = 1,
-              show.legend = FALSE)+
-  geom_boxplot(colour="black",
-               fill="white",
-               alpha = 1,
-               width = 0.4,
-               outlier.shape=NA,
-               show.legend = FALSE)
-
-
-p4 <- diplo_stickleback %>% drop_na %>%
-  filter(treatment == "Uninfected") %>%
-  ggplot(aes(x = sex, y = length_mm))+
-  geom_violin(aes(colour=sex, fill=sex),
-              alpha = 1,
-              width = 1,
-              show.legend = FALSE)+
-  geom_boxplot(colour="black",
-               fill="white",
-               alpha = 1,
-               width = 0.4,
-               outlier.shape=NA,
-               show.legend = FALSE)
 
 
 treatment_colours <- c("white", "white", "#FF0500", "#FFBE00", "#FCFF19")
 
 p5 <- diplo_stickleback %>% drop_na %>%
   ggplot(aes(x = treatment, y = length_mm, fill=treatment))+
+  labs(x='Treatment', y='Length (mm)')+
   geom_violin(
     alpha = 1,
     width = 1,
@@ -281,20 +197,20 @@ p5 <- diplo_stickleback %>% drop_na %>%
     alpha = 1,
     width = 0.3,
     outlier.shape=NA)+
-  
-  theme(legend.position = "none")+
-  scale_fill_manual(values = treatment_colours)
+  scale_fill_manual(values = treatment_colours)+
+  theme(legend.position = "none",
+        panel.background = element_rect(fill = 'white', colour = 'black'))
 
-((
-  p1 + theme(panel.background = element_rect(fill = 'white', colour = 'black'))
+
+plot_3 <- ((
+    sex_graph("Control", "white")
   |
-    p2 + theme(panel.background = element_rect(fill = '#FFB1B1', colour = 'black'))
+    sex_graph("Infected HG", '#FFB1B1')
   |
-    p3 + theme(panel.background = element_rect(fill = '#FFE6B1', colour = 'black'))
+    sex_graph("Infected LG", '#FFE6B1') 
   |
-    p4 + theme(panel.background = element_rect(fill = '#FFFEB1', colour = 'black'))
-)/p5 + theme(panel.background = element_rect(fill = 'white', colour = 'black'))
-) &
+    sex_graph("Uninfected", '#FFFEB1')
+) / p5) &
   ylim(30, 55)
 
 
