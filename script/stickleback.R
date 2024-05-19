@@ -97,9 +97,11 @@ treatment_vs_intensity <- function(field, colour) {
 }
 
 plot_1 <- treatment_vs_intensity("Control", col_control) +
-  treatment_vs_intensity("Infected LG", col_infected_lg) +
   treatment_vs_intensity("Uninfected", col_uninfected) +
+  treatment_vs_intensity("Infected LG", col_infected_lg) +
   treatment_vs_intensity("Infected HG", col_infected_hg)
+
+
 
 #PLOT 2 ----
 
@@ -129,7 +131,7 @@ plot_density_treatment <- function(treatment_arg) {
 
 
 
-diplo_stickleback |>
+mean_table <- diplo_stickleback |>
   group_by(treatment) |>
   summarise(
     Min = min(diplo_intensity_log) |> round(digits = 2),

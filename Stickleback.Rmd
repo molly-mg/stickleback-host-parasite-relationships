@@ -19,11 +19,10 @@ Sticklebacks are small freshwater and oceanic fish, characterised by their abund
 ## Analysis
 Initially, I aimed to establish whether there was an immunological advantage to infection of the host with a helminth parasite. To address this question, parasite A (Control, Infected HG, Infected LG and Uninfected) was compared with the log of parasite B intensity (right eye + left eye + 1). I used an ordinary least squares method to analyse parasite B intensity with parasite A treatment levels as the categorical predictor, against the control. This model violated the assumption of normality of residues, thus a square-root data transformation was undertaken to improve the fit of the model to the data. 
 
-The problem addressed here is whether there is an immune benefit to being infected with a less damaging parasite and what the cost-benefit analysis is to the fish.
+To establish the biological cost of parasite A on sticklebacks, each treatment level was compared with initial stickleback length (mm), then subdivided into length per sex to compare energetic cost. An ordinary least squares method was employed to analyse treatment (parasite A) as the predictor variable with length (mm). There was moderate violation of linear model assumptions normality of residues, however, data transformation did not improve this outcome, therefore, careful consideration with which this model is applied to the wider population, must be taken. A t-test was performed to directly compare the catergorical variable of sex with the continuous variable of length, the establish biological connection.
 
-The data was collected from ... they measured parasite A infection in strains of growth; high, low and unifected. They also measured length of the fish pre exposure, age, sex, total diplo, diplo log and diplo in each eye. In this analysis we were interested in the overall diplo infection and its potential impacts on immunity. We also considered the disadvatages of parasite A such as energetic effects of parasitism thus studying length and also looked at potential differences between sexes as energetic and immunological differences may affect them differently. For example, one paper found fish infected with parasite A were slower and less aligned than those without (1).
-
-To establish the biological cost of parasite A on sticklebacks, each treatment level was compared with initial stickleback length (mm), then subdivided into 
+R version
+R packages
 
 ### Linear modeling:
 most of this should be R&D
@@ -45,41 +44,53 @@ Rpackages
 
 ## Results and Discussion
 
-### Parasite A Infection Impact on Parasite B
-Hypothesis 1: The impact of a present A infection will have a negative consequence for the immune system therefore infection of parasite B will be higher.
-Hypothesis 2: Previous potential infection of parasite A will have a beneficial consequence for parasite B protection.
-
+### Immunological impact of *Schistocephalus solidus* on *Gasterosteus aculeatus* susceptibility to *Diplostomum pseudospathaceum*
+Hypothesis 1: Historical infection of sticklebacks with parasite A will be of immunological advantage. 
+what plot one shows (reference plot 1)
 
 ```{r plot-1, eval = TRUE, echo = FALSE}
 
 plot_1
 
 ```
+Figure legend:
 
-1 Plot of LG and HG against control
+stats (using example)
+other paper findings
+link to next test (length and sex)
 
-2 Plot of Uninfected against control - shows is superior to having never been infected
 
-visual model summaries and model tables 
-3 summary figure (red, orange, yellow)
+Hypothesis 2: Current infection of sticklebacks with parasite A will be of immunological disadvantage. 
+what plot 2 shows (reference plot 2)
+summary and ditribution
 
-model findings
+```{r mean-table, eval = TRUE, echo = FALSE}
 
-overall this shows that there is potential benefit to previous infetion. However, the downside of the uninfected data is we do not know how many of them were infected we just see a sample of the poplation however seeing as it is very different from the control we can assume a great proportion had previous contact with parasite A. Other potential considerations are whether there is a disadvantage to having parasite A energetically - which could be measured by size and on sex, are one sex more affected - what are the reproductive impacts of this? 
+mean_table
 
-### biological impact of parasite A on length and sex
+```
 
-4 plot of length per treatment 
-combine
-5 plot of length per treatment broken down into sex
+### Biological impact of *Schistocephalus solidus* on *Gasterosteus aculeatus*, measured in length and sex
+Hypothesis 1: Infection of high-growth parasite A will decrease size of sticklebacks
+Hypothesis 2: Energetic costs of parasite A infection will impact male sticklebacks more severely
 
-model findings
+what does the pot show
+
+```{r plot-3, eval = TRUE, echo = FALSE}
+
+plot_3
+
+```
+
+stats (using example)
+other paper findings
+limitations / further study - look at word docu
 
 
 ## Conclusion 
 yes there are benefits but at what cost?
 cost more severe to a specific group?
 the next steps
-
+overall this shows that there is potential benefit to previous infetion. However, the downside of the uninfected data is we do not know how many of them were infected we just see a sample of the poplation however seeing as it is very different from the control we can assume a great proportion had previous contact with parasite A. Other potential considerations are whether there is a disadvantage to having parasite A energetically - which could be measured by size and on sex, are one sex more affected - what are the reproductive impacts of this? 
 
 
