@@ -101,6 +101,7 @@ plot_1 <- treatment_vs_intensity("Control", col_control) +
   treatment_vs_intensity("Infected LG", col_infected_lg) +
   treatment_vs_intensity("Infected HG", col_infected_hg)
 
+plot_1
 
 
 #PLOT 2 ----
@@ -143,7 +144,7 @@ mean_table <- diplo_stickleback |>
   mutate(Distribution = Treatment) |> 
   gt() |>
   tab_spanner(
-    label = 'Diplo Intensity',
+    label = 'Parasite B Intensity',
     columns = -Treatment
   ) |>
   text_transform(
@@ -215,7 +216,7 @@ plot_3 <- ((
 ) / p5) &
   ylim(30, 55)
 
-
+plot_3
 
 
 
