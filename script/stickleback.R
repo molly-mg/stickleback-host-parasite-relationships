@@ -263,7 +263,7 @@ check_model(log_length_treatment_lmodel)
 # neither data transformation improved the assumptions
 
 sex_length_lmodel <- lm(length_mm ~ sex, data = diplo_stickleback)
-summary(sex_lmodel) # linear model
+summary(sex_length_lmodel) # linear model
 
 confint(sex_length_lmodel)
 

@@ -1,5 +1,5 @@
 ---
-title: "The Immune Response of Gasterosteus aculeatus to Schistocephalus solidus and Subsequent Response to Diplostomum pseudospathaceum"
+title: "The Response of *Gasterosteus aculeatus* to Historical Infection with *Schistocephalus solidus* Provides Protectective Immunity Against Subsequent Infection with *Diplostomum pseudospathaceum*"
 output: html_document
 date: "2024-05-16"
 ---
@@ -28,11 +28,10 @@ The problem addressed here is whether there is an immune benefit to being infect
 
 The data was collected from ... they measured parasite A infection in strains of growth; high, low and unifected. They also measured length of the fish pre exposure, age, sex, total diplo, diplo log and diplo in each eye. In this analysis we were interested in the overall diplo infection and its potential impacts on immunity. We also considered the disadvatages of parasite A such as energetic effects of parasitism thus studying length and also looked at potential differences between sexes as energetic and immunological differences may affect them differently. For example, one paper found fish infected with parasite A were slower and less aligned than those without (1).
 
-Linear model 1:
-A linear model was run to analyse diplo intensity as a function of explanatory variable treatment. Looking at whether the differences between the control and the treatments were significant, Infected LG crossed zero.
-An ANOVA was used to compare diplo intensity with the predictor variable of treatment. control used as the basis At 95% confidence intervals infected HG had 0.46 higher diplo intensity (CI 0.26 and 0.65), infected LG have a lower intensity but the CIs cross zero so not significant (CI -0.48 and 0.06), uninfected was -0.34 less intensity on average (CI -0.57 and -0.11) which was also significant at a p-value of <0.05. (write up - lecture 3, slide 8). 22 % of the difference in diplo intensity is associated with which treatment (parasite A) was used, with an adjusted R-squared of 0.21. With a p-value of 1.94e-11 overall we can reject the null hypothesis that this would occur by chance.
+
 
 ### Linear modeling:
+most of this should be R&D
 I used an ordinary least squares method to analyse diplo intensity with parasite A treatments as categorical predictors. The linear model assumption of normality of residues was violated, therefore a square-root data transformation was undertaken to improve the fit of the model.
 Sticklebacks with a high-growth parasite A strain infection had a mean increased diplo intensity of a 0.17(95%CI;0.09:0.26) increase from the control sticklebacks with a mean 1.33 diplo intensity (95%CI;1.27:1.39). This was statistically significant(t~214~ = 4.04, *p* = 0.0000732). 
 Sticklebacks with a low-growth parasite A strain infection on average had a mean decreased diplo intensity of -0.08(95%CI;-0.19:0.04) from the control sticklebacks which was not statistically significant (t~214~ = -1.27, *p* = 0.21).
