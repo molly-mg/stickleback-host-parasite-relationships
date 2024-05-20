@@ -88,5 +88,5 @@ Whilst there did appear to be a significant difference observed between the cont
 
 ## Conclusion 
 Overall, there appears an immunological benefit to sticklebacks able to clear infection of parasite A being protected from parasite B and there is little evidence to suggest and energetic cost associated with this group. Further study of the impact of parasite A infection of reproduction, life expectancy and vulnerability to predation should be studied, particularly conisdering harbouring parasites can make these fish more vulnerable (cite). It could also be interesting to furhter research whether competition between parasite A and B plays a role in susceptibility and look more closely at the genetic differences in the 23 genes.
-
+limitations in data / analysis
 
