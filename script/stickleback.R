@@ -270,3 +270,6 @@ summary(sex_length_lmodel) # linear model
 
 confint(sex_length_lmodel)
 
+
+
+
