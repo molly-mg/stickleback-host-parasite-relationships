@@ -55,6 +55,8 @@ To determine whether the historical and/or present parasite A treatment, altered
 Sticklebacks with a low-growth parasite A strain infection, however, had a mean decreased parasite B intensity of -0.08(95%CI;-0.19:0.04) from the control sticklebacks which was not statistically significant (t~214~ = -1.27, *p* = 0.21). A study comparing high-growth and low-growth parasite A infection noted 23 key immune genes up-regulated during the infection at a later time-point in response to HG compared with LG, this delay in immune response consolidates the notion that the immunity would initially be rendered weaker in the HG group (4).
 With *F*3,214= 17.02, *p* <0.001, R^2^ 0.18, it is possible some of the variance may be explained by other factors which could impact intensity of parasite B such as the size or sex of the stickleback and how these variables may have been impacted by treatments with parasite A.
 
+ 
+
 
 ### Biological impact of *Schistocephalus solidus* on *Gasterosteus aculeatus*, measured by length and sex
 Hypothesis 1: Infection of high-growth parasite A will decrease size of sticklebacks.
@@ -69,6 +71,7 @@ A comparison of stickleback length (per parasite A treatment) and stickleback le
 plot_3
 
 ```
+
 **Figure 2. The effect of parasite A treatment on the length of sticklebacks, subdivided by sex.** An analysis of variance did not identify a statistically significant relationship between treatment and length. However, a relationship between length and sex was identified. Each colour indicates a treatment: white; control, yellow; uninfected, orange; low-growth infection, red; high-growth infection.
 
 
@@ -79,15 +82,11 @@ An ordinary least squares method was used to analyse the impact of treatment (pa
 
 A t-test was undertaken to determine whether some of the variance in stickleback length could be determined by sex as the predictor variable. The model identified an mean of -1.05 mm(95%CI;-2.03:-0.07) increase in length of female stickleback, statistically significant at (t~161~ = -2.12, *p* = 0.04). The R^2^ of 0.027 and adjusted R^2^ of 0.02, states that just 2 % of the variance is explained by the model. We can therefore suggest a relationship between sex and length which may be unrelated to parasitism. 
 
-
+Whilst there did appear to be a significant difference observed between the control and low-growth infection groups between the sexes, the small sample size of the LG group must be considered, it cannot be ruled out that these dat points were overly influential.
 
 
 
 ## Conclusion 
-yes there are benefits but at what cost?
-cost more severe to a specific group?
-the next steps
-overall this shows that there is potential benefit to previous infetion. However, the downside of the uninfected data is we do not know how many of them were infected we just see a sample of the poplation however seeing as it is very different from the control we can assume a great proportion had previous contact with parasite A. Other potential considerations are whether there is a disadvantage to having parasite A energetically - which could be measured by size and on sex, are one sex more affected - what are the reproductive impacts of this? 
-competition between parasites?
+Overall, there appears an immunological benefit to sticklebacks able to clear infection of parasite A being protected from parasite B and there is little evidence to suggest and energetic cost associated with this group. Further study of the impact of parasite A infection of reproduction, life expectancy and vulnerability to predation should be studied, particularly conisdering harbouring parasites can make these fish more vulnerable (cite). It could also be interesting to furhter research whether competition between parasite A and B plays a role in susceptibility and look more closely at the genetic differences in the 23 genes.
 
 
