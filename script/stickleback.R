@@ -11,6 +11,8 @@ library(rstatix)
 library(lmtest)
 library(gt)
 library(gtExtras)
+#For gtsave
+library(webshot2)
 
 #___________________----
 
@@ -147,6 +149,10 @@ mean_table <- diplo_stickleback |>
         ggplot_image(height = px(50), aspect_ratio = 3)
     }
   ) 
+
+# Export table to an image because LaTeX isn't happy with it
+mean_table %>% gtsave(filename='./mean_table.png')
+
 
 
 # PLOT 3 -----

@@ -1,7 +1,11 @@
 ---
-title: "The Response of *Gasterosteus aculeatus* to Historical Infection with *Schistocephalus solidus* Provides Protectective Immunity Against Subsequent Infection with *Diplostomum pseudospathaceum*"
-output: html_document
-date: "2024-05-20"
+title: The Response of *Gasterosteus aculeatus* to Historical Infection with *Schistocephalus
+  solidus* Provides Protectective Immunity Against Subsequent Infection with *Diplostomum
+  pseudospathaceum*
+output:
+  pdf_document: default
+  html_document: default
+date: "2024-05-21"
 ---
 
 ```{r read-data, include=FALSE}
@@ -11,124 +15,280 @@ source("script/stickleback.R")
 
 ```
 
-
 ## Introduction
-Sticklebacks are small freshwater and oceanic fish, characterised by their abundance of small spines. *Gasterosteus aculeatus*, three-spined sticklebacks, in conjunction with a species of tapeworm (*Schistocephalus solidus*), comprise a robust model system for the study host-parasite relationships (Jolles et al., 2020). This tapeworm species is associated with increased energy demands and altered immune responses of its host organism (Benesh & Kalbe, 2016). The biological phenomenon of helminth parasitism is exhibited by this system, the capacity for immune modulation to be enacted by a parasite on its host, altering future susceptibility to parasite infection (Piecyk et al., 2019). *Diplostomum pseudospathaceum*, a second parasitic worm species (trematode), has been identified in a number of bird and fish species, including sticklebacks. In this study we aim to identify how infection with parasite A (*Schistocephalus solidus*), may bolster the immune system of sticklebacks such that they exhibit a level of resistance to infection with parasite B (*Diplostomum pseudospathaceum*). Three levels of parasite A infection were measured; high-growth, low-growth and presently uninfected (historical infection unknown). The control group were never exposed to parasite A. The four groups were exposed to parasite B with infection intensity measured. The primary hypothesis is that a historical, cleared infection of parasite A will afford the uninfected group greater protection from parasite B than the control group. Conversely, current infection with parasite A will be detrimental to the immune system of the sticklebacks, rendering them more susceptible to infection with parasite B than the control group. The secondary hypothesis concerns the energetic costs of parasite A on sticklebacks, which may undermine its potential immunological benefits. It is expected that sticklebacks exposed to high-growth parasite A will have reduced body length from the control group, perhaps affecting one sex more severely due to disparities in energy requirements during reproduction.
 
+Sticklebacks are small freshwater and oceanic fish, characterised by
+their abundance of small spines. *Gasterosteus aculeatus*, three-spined
+sticklebacks, in conjunction with a species of tapeworm
+(*Schistocephalus solidus*), comprise a robust model system for the
+study host-parasite relationships (Jolles et al., 2020). This tapeworm
+species is associated with increased energy demands and altered immune
+responses of its host organism (Benesh & Kalbe, 2016). The biological
+phenomenon of helminth parasitism is exhibited by this system, the
+capacity for immune modulation to be enacted by a parasite on its host,
+altering future susceptibility to parasite infection (Piecyk et al.,
+2019). *Diplostomum pseudospathaceum*, a second parasitic worm species
+(trematode), has been identified in a number of bird and fish species,
+including sticklebacks. In this study we aim to identify how infection
+with parasite A (*Schistocephalus solidus*), may bolster the immune
+system of sticklebacks such that they exhibit a level of resistance to
+infection with parasite B (*Diplostomum pseudospathaceum*). Three levels
+of parasite A infection were measured; high-growth, low-growth and
+presently uninfected (historical infection unknown). The control group
+were never exposed to parasite A. The four groups were exposed to
+parasite B with infection intensity measured. The primary hypothesis is
+that a historical, cleared infection of parasite A will afford the
+uninfected group greater protection from parasite B than the control
+group. Conversely, current infection with parasite A will be detrimental
+to the immune system of the sticklebacks, rendering them more
+susceptible to infection with parasite B than the control group. The
+secondary hypothesis concerns the energetic costs of parasite A on
+sticklebacks, which may undermine its potential immunological benefits.
+It is expected that sticklebacks exposed to high-growth parasite A will
+have reduced body length from the control group, perhaps affecting one
+sex more severely due to disparities in energy requirements during
+reproduction.
 
 ## Analysis
-Initially, I aimed to establish whether there was an immunological advantage to infection of the host with a helminth parasite. To address this question, parasite A (Control, Infected HG, Infected LG and Uninfected) was compared with the log of parasite B intensity (right eye + left eye + 1). I used an ordinary least squares method to analyse parasite B intensity with parasite A treatment levels as the categorical predictor, against the control. This model violated the assumption of normality of residues, thus a square-root data transformation was undertaken to improve the fit of the model to the data. 
 
-To establish the biological cost of parasite A on sticklebacks, each treatment level was compared with initial stickleback length (mm), then subdivided into length per sex to compare energetic cost. An ordinary least squares method was employed to analyse treatment (parasite A) as the predictor variable with length (mm). There was moderate violation of linear model assumptions normality of residues, however, data transformation did not improve this outcome, therefore, careful consideration with which this model is applied to the wider population, must be taken. A t-test was performed to directly compare the categorical variable of sex with the continuous variable of length, to establish biological connection.
+Initially, I aimed to establish whether there was an immunological
+advantage to infection of the host with a helminth parasite. To address
+this question, parasite A (Control, Infected HG, Infected LG and
+Uninfected) was compared with the log of parasite B intensity (right
+eye + left eye + 1). I used an ordinary least squares method to analyse
+parasite B intensity with parasite A treatment levels as the categorical
+predictor, against the control. This model violated the assumption of
+normality of residues, thus a square-root data transformation was
+undertaken to improve the fit of the model to the data.
 
-R version 4.4.0 was used to undertake this analysis. Packages 'janitor' and 'tidyverse' were used to clean the data, with 'dplyr' used to filter the data. 'patchwork' and ggplot extension 'gghighlight' were used construct the figures. 'gt' and gtExtras' were used to create table 1. 'rstatix' and 'lmtest' were used to undertake statistical tests with 'performance' used to measure violations of linear model assumptions.   
+To establish the biological cost of parasite A on sticklebacks, each
+treatment level was compared with initial stickleback length (mm), then
+subdivided into length per sex to compare energetic cost. An ordinary
+least squares method was employed to analyse treatment (parasite A) as
+the predictor variable with length (mm). There was moderate violation of
+linear model assumptions normality of residues, however, data
+transformation did not improve this outcome, therefore, careful
+consideration with which this model is applied to the wider population,
+must be taken. A t-test was performed to directly compare the
+categorical variable of sex with the continuous variable of length, to
+establish biological connection.
 
+R version 4.4.0 was used to undertake this analysis. Packages 'janitor'
+and 'tidyverse' were used to clean the data, with 'dplyr' used to filter
+the data. 'patchwork' and ggplot extension 'gghighlight' were used
+construct the figures. 'gt' and gtExtras' were used to create table 1.
+'rstatix' and 'lmtest' were used to undertake statistical tests with
+'performance' used to measure violations of linear model assumptions.
 
 ## Results and Discussion
 
 ### Immunological impact of *Schistocephalus solidus* on *Gasterosteus aculeatus* susceptibility to *Diplostomum pseudospathaceum*
-Hypothesis 1: Historical infection of sticklebacks with parasite A will be of immunological advantage. 
-Hypothesis 2: Current infection of sticklebacks with parasite A will be of immunological disadvantage.
 
+Hypothesis 1: Historical infection of sticklebacks with parasite A will
+be of immunological advantage.
 
-```{r plot-1, eval = TRUE, echo = FALSE}
+Hypothesis 2: Current infection of sticklebacks with parasite A will be
+of immunological disadvantage.
 
+```{r plot-1, eval = TRUE, echo = FALSE, fig.align = 'center'}
 plot_1
-
 ```
 
-**Figure 1. Historical infection of sticklebacks with parasite A reduces infection level with parasite B, meanwhile, present infection with parasite A increases infection level of sticklebacks with parasite B.** Analysis of variance identified a mean decrease in parasite B intensity of 0.17(95%CI;0.09:0.26) from the control group to the uninfected group, whilst the infected HG group had a mean increase in parasite B intensity of 0.17(95%CI;0.09:0.26). This aligns with the hypotheses that historical infection may offer immunological advantage whilst current infection may be weaken immune response to parasite B. Each colour indicates a treatment: white; control, yellow; uninfected, orange; low-growth infection, red; high-growth infection. The dashed lines indicate the means of each group: black; control mean, blue; mean of each of the three treatments.
+**Figure 1. Historical infection of sticklebacks with parasite A reduces
+infection level with parasite B, meanwhile, present infection with
+parasite A increases infection level of sticklebacks with parasite B.**
+Analysis of variance identified a mean decrease in parasite B intensity
+of 0.17(95%CI;0.09:0.26) from the control group to the uninfected group,
+whilst the infected HG group had a mean increase in parasite B intensity
+of 0.17(95%CI;0.09:0.26). This aligns with the hypotheses that
+historical infection may offer immunological advantage whilst current
+infection may be weaken immune response to parasite B. Each colour
+indicates a treatment: white; control, yellow; uninfected, orange;
+low-growth infection, red; high-growth infection. The dashed lines
+indicate the means of each group: black; control mean, blue; mean of
+each of the three treatments.
 
-The findings can be summarised as below (**Table 1**). The minimum, maximum and mean parasite B intensity for each treatment, alongside their relative distributions can be seen. 
+The findings can be summarised as below (**Table 1**). The minimum,
+maximum and mean parasite B intensity for each treatment, alongside
+their relative distributions can be seen.
 
-**Table 1. Summary of the difference in parasite B intensity between each parasite A treatment.**
-```{r mean-table, eval = TRUE, echo = FALSE}
+**Table 1. Summary of the difference in parasite B intensity between
+each parasite A treatment.**
 
-mean_table
-
+```{r mean-table, eval = TRUE, echo = FALSE, out.width = "50%", fig.align='center'}
+knitr::include_graphics('./mean_table.png')
 ```
 
 #### Statistical Analysis
-The analysis showed that historical parasite A infection contributed to a mean decrease of -0.16(95% CI;-0.25:-0.06) parasite B intensity from the control, statistically significant at t~214~ = -3.08, *p* = 0.002. Current infection of parasite A, however, showed sticklebacks with a high-growth parasite A infection had a mean increased parasite B intensity of a 0.17(95%CI;0.09:0.26) from the control group, with a mean 1.33 diplo intensity (95%CI;1.27:1.39). This was statistically significant(t~214~ = 4.04, *p* = 0.0000732). 
-Sticklebacks with a low-growth parasite A strain infection, however, had a mean decreased parasite B intensity of -0.08(95%CI;-0.19:0.04) from the control sticklebacks which was not statistically significant (t~214~ = -1.27, *p* = 0.21). A study comparing high-growth and low-growth parasite A infection noted 23 key immune genes up-regulated during the infection at a later time-point in response to high-growth compared with low-growth, this delay in immune response consolidates the notion that the immunity would initially be weakened in the high-growth group (Piecyk et al., 2019).
-With *F*3,214= 17.02, *p* <0.001, R^2^ 0.18, it is possible some of the variance may be explained by other factors which could impact intensity of parasite B such as the size or sex of the stickleback and how these variables may have been impacted by treatments with parasite A.
 
- 
-
+The analysis showed that historical parasite A infection contributed to
+a mean decrease of -0.16(95% CI;-0.25:-0.06) parasite B intensity from
+the control, statistically significant at t~214~ = -3.08, *p* = 0.002.
+Current infection of parasite A, however, showed sticklebacks with a
+high-growth parasite A infection had a mean increased parasite B
+intensity of a 0.17(95%CI;0.09:0.26) from the control group, with a mean
+1.33 diplo intensity (95%CI;1.27:1.39). This was statistically
+significant(t~214~ = 4.04, *p* = 0.0000732). Sticklebacks with a
+low-growth parasite A strain infection, however, had a mean decreased
+parasite B intensity of -0.08(95%CI;-0.19:0.04) from the control
+sticklebacks which was not statistically significant (t~214~ = -1.27,
+*p* = 0.21). A study comparing high-growth and low-growth parasite A
+infection noted 23 key immune genes up-regulated during the infection at
+a later time-point in response to high-growth compared with low-growth,
+this delay in immune response consolidates the notion that the immunity
+would initially be weakened in the high-growth group (Piecyk et al.,
+2019). With *F*3,214= 17.02, *p* \<0.001, R^2^ 0.18, it is possible some
+of the variance may be explained by other factors which could impact
+intensity of parasite B such as the size or sex of the stickleback and
+how these variables may have been impacted by treatments with parasite
+A.
 
 ### Biological impact of *Schistocephalus solidus* on *Gasterosteus aculeatus*, measured by length and sex
-Hypothesis 1: Infection of high-growth parasite A will decrease size of sticklebacks.
-Hypothesis 2: Energetic costs of parasite A infection will impact male sticklebacks more severely.
 
-A comparison of stickleback length (per parasite A treatment) and stickleback length subdivided into male and female (**Figure 2**). Some interesting observations can be made, including apparent increased length for the low-growth A infected group, which also happens the be the only group in which the mean length of male sticklebacks is greater than the mean length of female sticklebacks. There does not appear to be an apparent mean difference in length between the high-growth infected group than the control and the impact of each treatment does not appear to affect one sex more severely than another. 
+Hypothesis 1: Infection of high-growth parasite A will decrease size of
+sticklebacks.
 
-```{r plot-3, eval = TRUE, echo = FALSE}
+Hypothesis 2: Energetic costs of parasite A infection will impact male
+sticklebacks more severely.
+
+A comparison of stickleback length (per parasite A treatment) and
+stickleback length subdivided into male and female (**Figure 2**). Some
+interesting observations can be made, including apparent increased
+length for the low-growth A infected group, which also happens the be
+the only group in which the mean length of male sticklebacks is greater
+than the mean length of female sticklebacks. There does not appear to be
+an apparent mean difference in length between the high-growth infected
+group than the control and the impact of each treatment does not appear
+to affect one sex more severely than another.
+
+```{r plot-3, eval = TRUE, echo = FALSE, fig.align = 'center'}
 
 plot_3
 
 ```
 
-**Figure 2. The effect of parasite A treatment on the length of sticklebacks, subdivided by sex.** An analysis of variance did not identify a statistically significant relationship between treatment and length. However, a relationship between length and sex was identified. Each colour indicates a treatment: white; control, yellow; uninfected, orange; low-growth infection, red; high-growth infection.
-
+**Figure 2. The effect of parasite A treatment on the length of
+sticklebacks, subdivided by sex.** An analysis of variance did not
+identify a statistically significant relationship between treatment and
+length. However, a relationship between length and sex was identified.
+Each colour indicates a treatment: white; control, yellow; uninfected,
+orange; low-growth infection, red; high-growth infection.
 
 #### Statistical Analysis
-Statistical analysis corroborated suspicion that the null hypotheses may stand true. 
 
-An ordinary least squares method was used to analyse the impact of treatment (parasite A) as the predictor variable as its effect on length. The high-growth infection group, had a mean increase in length of 0.02 mm(95%CI;-1.24:1.28) from the control sticklebacks (mean = 41.4 mm(95% CI;40.53:42.27)), however this was not statistically significant (t~160~ = 0.03, *p* = 0.98). Sticklebacks with a low-growth parasite A infection have a mean increase in length of 0.98 mm(95%CI;-0.55:2.52) from the control which is not statistically significant (t~160~ = 1.27, *p* = 0.21). Finally, the uninfected sticklebacks had a mean increase in length of 0.15 mm(95% CI;-1.27:1.56) from the control which is also not statistically significant (t~160~ = 0.20, *p* = 0.84). The model had an R^2^ of 0.01 and an adjusted R^2^ of -0.01 conferring insignificance of the explanatory variables. Not only are there no statistically significant differences, the biological implication of an average of 0.02 mm difference in length as seen in the HG infected group would be very limited.
+An ordinary least squares method was used to analyse the impact of
+treatment (parasite A) as the predictor variable as its effect on
+length. The high-growth infection group, had a mean increase in length
+of 0.02 mm(95%CI;-1.24:1.28) from the control sticklebacks (mean = 41.4
+mm(95% CI;40.53:42.27)), however this was not statistically significant
+(t~160~ = 0.03, *p* = 0.98). Sticklebacks with a low-growth parasite A
+infection have a mean increase in length of 0.98 mm(95%CI;-0.55:2.52)
+from the control which is not statistically significant (t~160~ = 1.27,
+*p* = 0.21). Finally, the uninfected sticklebacks had a mean increase in
+length of 0.15 mm(95% CI;-1.27:1.56) from the control which is also not
+statistically significant (t~160~ = 0.20, *p* = 0.84). The model had an
+R^2^ of 0.01 and an adjusted R^2^ of -0.01 conferring insignificance of
+the explanatory variables. Not only are there no statistically
+significant differences, the biological implication of an average of
+0.02 mm difference in length as seen in the HG infected group would be
+very limited.
 
-A t-test was undertaken to determine whether some of the variance in stickleback length could be determined by sex as the predictor variable. The model identified an mean of -1.05 mm(95%CI;-2.03:-0.07) increase in length of female stickleback, statistically significant at (t~161~ = -2.12, *p* = 0.04). The R^2^ of 0.027 and adjusted R^2^ of 0.02, states that just 2 % of the variance is explained by the model. We can therefore suggest a relationship between sex and length which may be unrelated to parasitism. 
+A t-test was undertaken to determine whether some of the variance in
+stickleback length could be determined by sex as the predictor variable.
+The model identified an mean of -1.05 mm(95%CI;-2.03:-0.07) increase in
+length of female stickleback, statistically significant at (t~161~ =
+-2.12, *p* = 0.04). The R^2^ of 0.027 and adjusted R^2^ of 0.02, states
+that just 2 % of the variance is explained by the model. We can
+therefore suggest a relationship between sex and length which may be
+unrelated to parasitism.
 
-Whilst there did appear to be a significant difference observed between the control and low-growth infection groups between the sexes, the small sample size of the LG group must be considered, it cannot be ruled out that these dat points were overly influential.
+Whilst there did appear to be a significant difference observed between
+the control and low-growth infection groups between the sexes, the small
+sample size of the LG group must be considered, these data points were
+overly-influential compared with other treatment groups.
 
+## Conclusion
 
-
-## Conclusion 
-Overall, there appears an immunological benefit to sticklebacks able to clear infection of parasite A being protected from parasite B and there is little evidence to suggest and energetic cost associated with this group. Further study of the impact of parasite A infection of reproduction, life expectancy and vulnerability to predation should be studied, particularly conisdering harbouring parasites can make these fish more vulnerable (cite). It could also be interesting to furhter research whether competition between parasite A and B plays a role in susceptibility and look more closely at the genetic differences in the 23 genes.
-limitations in data / analysis
-
+Overall, there appears an immunological benefit to sticklebacks able to
+clear infection of parasite A in protection from parasite B and there is
+little evidence to suggest an energetic cost associated with the initial
+infection. Further study of the impact of parasite A infection of
+reproduction, life expectancy and vulnerability to predation should be
+studied, particularly conisdering harbouring parasites can make these
+fish more vulnerable to predators, slowing their movement and response
+time (Demandt et al., 2018). It could also be interesting to further
+research whether competition between parasite A and B plays a role in
+susceptibility and look more closely at the genetic differences in the
+23 immune response genes.
 
 ## References
-Achim Zeileis, Torsten Hothorn (2002). Diagnostic Checking in Regression Relationships. R News
-  2(3), 7-10. URL                 https://CRAN.R-project.org/doc/Rnews/
-  
-Benesh, D. P., & Kalbe, M. (2016). Experimental        parasite community ecology: intraspecific variation     in a large tapeworm affects community assembly.    Journal of Animal Ecology, 85(4), 1004–1013.         https://doi.org/10.1111/1365-2656.12527  
 
-Firke S (2023). _janitor: Simple Tools for Examining and Cleaning Dirty Data_. R package version
-  2.2.0, https://sfirke.github.io/janitor/, <https://github.com/sfirke/janitor>.
-  
-Jolles, J. W., Mazué, G. P. F., Davidson, J., Behrmann-Godel, J., & Couzin, I. D. (2020).            Schistocephalus parasite infection alters            sticklebacks’ movement ability and thereby shapes    social interactions. Scientific Reports, 10(1),      12282. https://doi.org/10.1038/s41598-020-69057-0
+Achim Zeileis, Torsten Hothorn (2002). Diagnostic Checking in Regression
+Relationships. R News 2(3), 7-10. URL
+<https://CRAN.R-project.org/doc/Rnews/>
 
-Iannone R, Cheng J, Schloerke B, Hughes E, Lauer A, Seo J (2024). _gt: Easily Create
-  Presentation-Ready Display Tables_. R package version 0.10.1, https://github.com/rstudio/gt,
-  <https://gt.rstudio.com>.
-  
-Kassambara A (2023). _rstatix: Pipe-Friendly Framework for Basic Statistical Tests_. R package version 0.7.2,
-  <https://rpkgs.datanovia.com/rstatix/>.
-  
-Lüdecke et al., (2021). performance: An R Package for Assessment, Comparison and Testing of Statistical  Models.
-  Journal of Open Source Software, 6(60), 3139. https://doi.org/10.21105/joss.03139
-  
-Mock T (2023). _gtExtras: Extending 'gt' for Beautiful HTML Tables_. R package version 0.5.0,
-  https://jthomasmock.github.io/gtExtras/, <https://github.com/jthomasmock/gtExtras>.
-  
-Pedersen T (2024). _patchwork: The Composer of Plots_. R package version 1.2.0,
-  https://github.com/thomasp85/patchwork, <https://patchwork.data-imaginist.com>.
-  
-Piecyk, A., Ritter, M., & Kalbe, M. (2019). The right   response at the right time: Exploring helminth   immune modulation in sticklebacks by experimental   coinfection. Molecular Ecology, 28(10), 2668–2680. https://doi.org/10.1111/mec.15106
+Benesh, D. P., & Kalbe, M. (2016). Experimental parasite community
+ecology: intraspecific variation in a large tapeworm affects community
+assembly. Journal of Animal Ecology, 85(4), 1004–1013.
+<https://doi.org/10.1111/1365-2656.12527>
+
+Demandt, N., Saus, B., Kurvers, R. H. J. M., Krause, J., Kurtz, J., &
+Scharsack, J. P. (2018). Parasite-infected sticklebacks increase the
+risk-taking behaviour of uninfected group members. Proceedings of the
+Royal Society B: Biological Sciences, 285(1881), 20180956.
+<https://doi.org/10.1098/rspb.2018.0956>
+
+Firke S (2023). *janitor: Simple Tools for Examining and Cleaning Dirty
+Data*. R package version 2.2.0, <https://sfirke.github.io/janitor/>,
+<https://github.com/sfirke/janitor>.
+
+Jolles, J. W., Mazué, G. P. F., Davidson, J., Behrmann-Godel, J., &
+Couzin, I. D. (2020). Schistocephalus parasite infection alters
+sticklebacks’ movement ability and thereby shapes social interactions.
+Scientific Reports, 10(1), 12282.
+<https://doi.org/10.1038/s41598-020-69057-0>
+
+Iannone R, Cheng J, Schloerke B, Hughes E, Lauer A, Seo J (2024). *gt:
+Easily Create Presentation-Ready Display Tables*. R package version
+0.10.1, <https://github.com/rstudio/gt>, <https://gt.rstudio.com>.
+
+Kassambara A (2023). *rstatix: Pipe-Friendly Framework for Basic
+Statistical Tests*. R package version 0.7.2,
+<https://rpkgs.datanovia.com/rstatix/>.
+
+Lüdecke et al., (2021). performance: An R Package for Assessment,
+Comparison and Testing of Statistical Models. Journal of Open Source
+Software, 6(60), 3139. <https://doi.org/10.21105/joss.03139>
+
+Mock T (2023). *gtExtras: Extending 'gt' for Beautiful HTML Tables*. R
+package version 0.5.0, <https://jthomasmock.github.io/gtExtras/>,
+<https://github.com/jthomasmock/gtExtras>.
+
+Pedersen T (2024). *patchwork: The Composer of Plots*. R package version
+1.2.0, <https://github.com/thomasp85/patchwork>,
+<https://patchwork.data-imaginist.com>.
+
+Piecyk, A., Ritter, M., & Kalbe, M. (2019). The right response at the
+right time: Exploring helminth immune modulation in sticklebacks by
+experimental coinfection. Molecular Ecology, 28(10), 2668–2680.
+<https://doi.org/10.1111/mec.15106>
 
 R Core Team (2018). R: A language and environment for statistical
-  computing. R Foundation for Statistical Computing, Vienna, Austria.
-  URL https://www.R-project.org/.
-  
-Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Hayes A, Henry L,
-  Hester J, Kuhn M, Pedersen TL, Miller E, Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu
-  V, Takahashi K, Vaughan D, Wilke C, Woo K, Yutani H (2019). “Welcome to the tidyverse.” _Journal
-  of Open Source Software_, *4*(43), 1686. doi:10.21105/joss.01686
-  <https://doi.org/10.21105/joss.01686>.
-  
-Wickham H, François R, Henry L, Müller K, Vaughan D (2023). _dplyr: A Grammar of Data
-  Manipulation_. R package version 1.1.4, https://github.com/tidyverse/dplyr,
-  <https://dplyr.tidyverse.org>.
-  
-Yutani H (2023). _gghighlight: Highlight Lines and Points in 'ggplot2'_. R package version 0.4.1,
-  https://github.com/yutannihilation/gghighlight/, <https://yutannihilation.github.io/gghighlight/>.  
+computing. R Foundation for Statistical Computing, Vienna, Austria. URL
+<https://www.R-project.org/>.
+
+Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R,
+Grolemund G, Hayes A, Henry L, Hester J, Kuhn M, Pedersen TL, Miller E,
+Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu V, Takahashi K,
+Vaughan D, Wilke C, Woo K, Yutani H (2019). “Welcome to the tidyverse.”
+*Journal of Open Source Software*, *4*(43), 1686.
+<doi:10.21105/joss.01686> <https://doi.org/10.21105/joss.01686>.
+
+Wickham H, François R, Henry L, Müller K, Vaughan D (2023). *dplyr: A
+Grammar of Data Manipulation*. R package version 1.1.4,
+<https://github.com/tidyverse/dplyr>, <https://dplyr.tidyverse.org>.
+
+Yutani H (2023). *gghighlight: Highlight Lines and Points in 'ggplot2'*.
+R package version 0.4.1,
+<https://github.com/yutannihilation/gghighlight/>,
+<https://yutannihilation.github.io/gghighlight/>.
